@@ -4,9 +4,40 @@ class network {
 
     include common
 
+    # Determine which network service to be used.
+    if $operatingsystemrelease >= 15 or $hostname == "snoopy" {
+
+        $network_package = "NetworkManager"
+        $network_service = "NetworkManager"
+
+        service { "network":
+            enable      => false,
+            ensure      => stopped,
+            hasrestart  => true,
+            hasstatus   => false,
+            status      => "ip link show dev ${interface} | grep -q ',UP,'",
+        }
+
+    } else {
+
+        $network_package = "initscripts"
+        $network_service = "network"
+
+        package { "NetworkManager":
+            ensure  => absent,
+        }
+
+    }
+
+    # Determine interface name.
     $interface = $hostname ? {
         "droopy"        => "br0",
+        "zuul"          => "p32p1",
         default         => "eth0",
+    }
+
+    package { "$network_package":
+        ensure  => installed,
     }
 
     # Set up a link of /etc/network to /etc/sysconfig/network-scripts/ because
@@ -21,14 +52,15 @@ class network {
         ensure  => present,
         file    => "/etc/sysconfig/network-scripts/ifcfg-${interface}",
         line    => "PEERNTP=no",
-        notify  => Service["network"],
+        notify  => Service["$network_service"],
     }
 
-    service { "network":
-        enable		=> true,
-        ensure		=> running,
-        hasrestart	=> true,
-        hasstatus	=> false,
+    service { "$network_service":
+        enable          => true,
+        ensure          => running,
+        hasrestart      => true,
+        hasstatus       => false,
+        require         => Package["$network_package"],
         status          => "ip link show dev ${interface} | grep -q ',UP,'",
     }
 
