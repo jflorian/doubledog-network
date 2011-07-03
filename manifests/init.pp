@@ -4,8 +4,10 @@ class network {
 
     include common
 
-    # Determine which network service to be used.
-    if $operatingsystemrelease >= 15 or $hostname == "snoopy" {
+    # Determine which network service to be used.  Snoopy requires NM service
+    # for wireless.  Droopy requires network service for bridging.
+    if ($operatingsystemrelease >= 15 and $hostname != 'droopy')
+        or $hostname == "snoopy" {
 
         $network_package = "NetworkManager"
         $network_service = "NetworkManager"
