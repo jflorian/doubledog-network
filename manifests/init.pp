@@ -6,8 +6,8 @@ class network {
 
     # Determine which network service to be used.  Snoopy requires NM service
     # for wireless.  Droopy requires network service for bridging.
-    if ($operatingsystemrelease >= 15 and $hostname != 'droopy-f15')
-        or $hostname == "snoopy" {
+    if ($operatingsystemrelease >= 15 and $hostname != 'droopy-f15' and
+        $hostname != 'pluto-f15') or $hostname == "snoopy" {
 
         $network_package = "NetworkManager"
         $network_service = "NetworkManager"
