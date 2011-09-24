@@ -33,9 +33,11 @@ class network {
 
     # Determine interface name.
     $interface = $hostname ? {
-        "droopy-f15"    => "br0",
-        "zuul"          => "p32p1",
-        default         => "eth0",
+        'droopy-f15'    => 'br0',
+        'daisy'         => 'p32p1',
+        'snoopy'        => 'p32p1',
+        'zuul'          => 'p32p1',
+        default         => 'eth0',
     }
 
     package { "$network_package":
