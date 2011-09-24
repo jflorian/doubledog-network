@@ -4,10 +4,10 @@ class network {
 
     include common
 
-    # Determine which network service to be used.  Snoopy requires NM service
-    # for wireless.  Droopy requires network service for bridging.
+    # Determine which network service to be used.  Droopy requires network
+    # service for bridging.  Pluto is also special with pyptables.
     if ($operatingsystemrelease >= 15 and $hostname != 'droopy-f15' and
-        $hostname != 'pluto-f15') or $hostname == "snoopy" {
+        $hostname != 'pluto-f15') {
 
         $network_package = "NetworkManager"
         $network_service = "NetworkManager"
