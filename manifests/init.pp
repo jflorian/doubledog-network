@@ -1,4 +1,4 @@
-# /etc/puppet/modules/network/manifests/init.pp
+# modules/network/manifests/init.pp
 
 class network {
 
