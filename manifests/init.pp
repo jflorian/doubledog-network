@@ -36,7 +36,7 @@ class network {
         'droopy-f15'    => 'br0',
         'daisy'         => 'p32p1',
         'snoopy'        => 'p32p1',
-        'zuul'          => 'p32p1',
+        'zuul'          => 'p6p1',
         default         => 'eth0',
     }
 
