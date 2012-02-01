@@ -1,0 +1,21 @@
+# Network interface configuration for <%= name %> on <%= fqdn %>.
+# This file is managed by puppet.
+
+BOOTPROTO="dhcp"
+<% if bridge != :undef -%>
+BRIDGE="<%= bridge %>"
+<% end -%>
+DEFROUTE="yes"
+DEVICE="<%= name %>"
+HWADDR="<%= interface_hwaddr %>"
+IPV4_FAILURE_FATAL="yes"
+IPV6INIT="no"
+NAME="System <%= name %>"
+NM_CONTROLLED="no"
+NOZEROCONF="yes"
+ONBOOT="yes"
+PEERDNS="<%= peer_dns %>"
+PEERNTP="no"    # puppet manages NTP directly
+PEERROUTES="yes"
+PERSISTENT_DHCLIENT="yes"
+TYPE="Ethernet"

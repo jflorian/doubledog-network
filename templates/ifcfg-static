@@ -1,0 +1,18 @@
+# Network interface configuration for <%= name %> on <%= fqdn %>.
+# This file is managed by puppet.
+
+BOOTPROTO="none"
+<% if bridge != :undef -%>
+BRIDGE="<%= bridge %>"
+<% end -%>
+DEVICE="<%= name %>"
+HWADDR="<%= interface_hwaddr %>"
+IPADDR="<%= ip_address %>"
+IPV4_FAILURE_FATAL="yes"
+IPV6INIT="no"
+NAME="System <%= name %>"
+NETMASK="<%= netmask %>"
+NM_CONTROLLED="no"
+NOZEROCONF="yes"
+ONBOOT="yes"
+TYPE="Ethernet"
