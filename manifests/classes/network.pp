@@ -20,9 +20,8 @@ class network {
         ensure  => installed,
     }
 
-    # Kludging around puppet's inability to remove dependencies.
-    exec { 'yum -y remove NetworkManager':
-        onlyif  => 'rpm -q NetworkManager',
+    yum::remove { 'NetworkManager':
+        before  => Service['network'],
         # It may be necessary to have the replacement installed prior to
         # removal of the conflicting package.
         require => Package['initscripts'],
@@ -40,7 +39,6 @@ class network {
         hasrestart      => true,
         hasstatus       => true,
         require         => [
-            Exec['yum -y remove NetworkManager'],
             Package['initscripts'],
         ],
     }
