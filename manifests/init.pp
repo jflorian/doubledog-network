@@ -1,4 +1,4 @@
-# modules/network/manifests/classes/network.pp
+# modules/network/manifests/init.pp
 #
 # Synopsis:
 #       Configures network services on a host.

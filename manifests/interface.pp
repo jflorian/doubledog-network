@@ -1,4 +1,4 @@
-# modules/network/manifests/definitions/interface.pp
+# modules/network/manifests/interface.pp
 #
 # Synopsis:
 #       Installs a network interface configuration file.
