@@ -5,26 +5,37 @@
 #
 # Parameters:
 #       Name__________  Default_______  Description___________________________
-#       NONE
+#
+#       network_manager false           Install NetworkManager and related
+#                                       packages, which are useful on WiFi
+#                                       capable devices.
 #
 # Requires:
 #       NONE
 #
-# Example usage:
+# Example Usage:
 #
-#       include network
+#       class {'network':
+#            network_manager => true,
+#       }
 
-class network {
+class network ($network_manager=false) {
 
     package { 'initscripts':
         ensure  => installed,
     }
 
-    yum::remove { 'NetworkManager':
-        before  => Service['network'],
-        # It may be necessary to have the replacement installed prior to
-        # removal of the conflicting package.
-        require => Package['initscripts'],
+    if $network_manager == true {
+        package { ['NetworkManager', 'kde-plasma-networkmanagement']:
+            ensure => installed,
+        }
+    } else {
+        yum::remove { 'NetworkManager':
+            before  => Service['network'],
+            # It may be necessary to have the replacement installed prior to
+            # removal of the conflicting package.
+            require => Package['initscripts'],
+        }
     }
 
     # PITA reduction
