@@ -15,7 +15,7 @@ NM_CONTROLLED="no"
 NOZEROCONF="yes"
 ONBOOT="yes"
 PEERDNS="<%= peer_dns %>"
-PEERNTP="no"    # puppet manages NTP directly
+PEERNTP="<%= peer_ntp %>"
 PEERROUTES="yes"
 PERSISTENT_DHCLIENT="yes"
 TYPE="Ethernet"

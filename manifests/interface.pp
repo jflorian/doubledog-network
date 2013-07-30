@@ -12,15 +12,6 @@
 #
 # Requires:
 #       Class['network']
-#
-# Example usage:
-#
-#       include network
-#
-#       network::interface { 'acme':
-#           notify  => Service['SERVICE_NAME'],
-#           source  => 'puppet:///private-host/acme.conf',
-#       }
 
 
 define network::interface (
@@ -29,7 +20,8 @@ define network::interface (
         $ip_address=undef,
         $netmask=undef,
         $bridge=undef,
-        $peer_dns='yes'
+        $peer_dns='yes',
+        $peer_ntp='yes',
     ) {
 
     # The template needs a particular macaddress fact, but it cannot do
