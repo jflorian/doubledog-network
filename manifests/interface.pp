@@ -25,10 +25,10 @@ define network::interface (
     ) {
 
     # The template needs a particular macaddress fact, but it cannot do
-    # something like "<%= macaddress_<%= name %>%>", so this little trick is
+    # something like "<%= @macaddress_<%= name %>%>", so this little trick is
     # used here to accomplish the variable interpolation.
     $mac_fact = "macaddress_${name}"
-    $interface_hwaddr = inline_template("<%= scope.lookupvar(mac_fact) %>")
+    $interface_hwaddr = inline_template("<%= scope.lookupvar(@mac_fact) %>")
 
     file { "/etc/sysconfig/network-scripts/ifcfg-${name}":
         content => template("network/ifcfg-${template}"),
