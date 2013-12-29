@@ -12,7 +12,11 @@ IPV4_FAILURE_FATAL="yes"
 IPV6INIT="no"
 NAME="System <%= @name %>"
 NETMASK="<%= @netmask %>"
+<% if scope.lookupvar('network::service') == "nm" -%>
+NM_CONTROLLED="yes"
+<% else -%>
 NM_CONTROLLED="no"
+<% end -%>
 NOZEROCONF="yes"
 ONBOOT="yes"
 TYPE="Ethernet"

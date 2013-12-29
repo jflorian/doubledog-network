@@ -1,42 +1,25 @@
 # modules/network/manifests/init.pp
 #
-# Synopsis:
-#       Configures network services on a host.
+# == Class: network
 #
-# Parameters:
-#       Name__________  Default_______  Description___________________________
+# Configures network services on a host.
 #
-#       network_manager false           Install NetworkManager and related
-#                                       packages, which are useful on WiFi
-#                                       capable devices.
+# === Parameters
 #
-# Requires:
-#       NONE
+# [*service*]
+#   Use 'legacy' (default) or 'nm' (NetworkManager) service.
 #
-# Example Usage:
+# [*gui_tools*]
+#   Are GUI tools to be installed?  true or false (default).
 #
-#       class {'network':
-#            network_manager => true,
-#       }
+# === Authors
+#
+#   John Florian <jflorian@doubledog.org>
 
-class network ($network_manager=false) {
 
-    package { 'initscripts':
-        ensure  => installed,
-    }
+class network ($service='legacy', $gui_tools=false) {
 
-    if $network_manager == true {
-        package { ['NetworkManager', 'kde-plasma-networkmanagement']:
-            ensure => installed,
-        }
-    } else {
-        yum::remove { 'NetworkManager':
-            before  => Service['network'],
-            # It may be necessary to have the replacement installed prior to
-            # removal of the conflicting package.
-            require => Package['initscripts'],
-        }
-    }
+    include 'network::params'
 
     # PITA reduction
     file { "/etc/network":
@@ -44,14 +27,50 @@ class network ($network_manager=false) {
         target  => "sysconfig/network-scripts/",
     }
 
-    service { 'network':
-        enable          => true,
-        ensure          => running,
-        hasrestart      => true,
-        hasstatus       => true,
-        require         => [
-            Package['initscripts'],
-        ],
+    package {
+
+        $network::params::legacy_packages:
+            ensure  => installed,
+            notify  => Service[$network::params::legacy_services];
+
+        $network::params::manager_packages:
+            ensure  => installed,
+            notify  => Service[$network::params::manager_services];
+
+        $network::params::gui_packages:
+            ensure  => $gui_tools ? {
+                true    => installed,
+                default => absent,
+            };
+
+    }
+
+    service {
+
+        $network::params::legacy_services:
+            enable      => $service ? {
+                'legacy'    => true,
+                default     => false,
+            },
+            ensure      => $service ? {
+                'legacy'    => running,
+                default     => stopped,
+            },
+            hasrestart  => true,
+            hasstatus   => true;
+
+        $network::params::manager_services:
+            enable      => $service ? {
+                'nm'        => true,
+                default     => false,
+            },
+            ensure      => $service ? {
+                'nm'        => running,
+                default     => stopped,
+            },
+            hasrestart  => true,
+            hasstatus   => true;
+
     }
 
 }

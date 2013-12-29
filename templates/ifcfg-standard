@@ -11,7 +11,11 @@ HWADDR="<%= @interface_hwaddr %>"
 IPV4_FAILURE_FATAL="yes"
 IPV6INIT="no"
 NAME="System <%= @name %>"
+<% if scope.lookupvar('network::service') == "nm" -%>
+NM_CONTROLLED="yes"
+<% else -%>
 NM_CONTROLLED="no"
+<% end -%>
 NOZEROCONF="yes"
 ONBOOT="yes"
 PEERDNS="<%= @peer_dns %>"
