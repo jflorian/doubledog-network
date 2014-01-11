@@ -23,22 +23,26 @@ class network::params {
             $gui_packages = [
                 'kde-plasma-networkmanagement',
             ]
-            $legacy_services = [
-                'network',
-            ]
             $manager_services = [
                 'NetworkManager',
             ]
 
-            # NB: This condition is not based on when 'systemd' was
-            # introduced, but what Fedora releases are known to be flakey when
-            # using the legacy 'redhat' provider that puppet seems to sadly
-            # prefer.  The threshold may require adjustment over time, but
-            # thus far Fedora 20 is known to require systemd here.
-            if $::operatingsystemrelease >= 20 {
+            # Starting with Fedora 19, it's necessary to force the use of the
+            # systemd provider since the legacy redhat provider (which puppet
+            # seems to prefer) tends to misreport the current status.
+            # Furthermore, when referencing the classic network service with
+            # systemd (at least for enabling), it's necessary to use the
+            # '.service' suffix.
+            if $::operatingsystemrelease >= 19 {
                 $legacy_service_provider = 'systemd'
+                $legacy_services = [
+                    'network.service',
+                ]
             } else {
                 $legacy_service_provider = 'redhat'
+                $legacy_services = [
+                    'network',
+                ]
             }
 
         }
