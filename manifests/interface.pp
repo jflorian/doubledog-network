@@ -72,7 +72,11 @@ define network::interface (
         seltype => 'net_conf_t',
         seluser => 'system_u',
         content => template("network/ifcfg-${template}"),
-        notify  => Service['network'],
+        notify  => $network::service ? {
+            'legacy'    => Service[$network::params::legacy_services],
+            # NetworkManager responds automatically to changes.
+            default     => undef,
+        }
     }
 
 }
