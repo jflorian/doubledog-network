@@ -7,7 +7,17 @@
 # === Parameters
 #
 # [*service*]
-#   Use 'legacy' (default) or 'nm' (NetworkManager) service.
+#   Use 'legacy' (default) or 'nm' (NetworkManager) service.  Required.
+#
+# [*domain*]
+#   Name of the network domain.  Optional.  Typically not required for hosts
+#   with interfaces configured exclusively by DHCP.
+#
+# [*name_servers*]
+#   List of IP addresses that provide DNS name resolution.  Optional.
+#   Typically not required for hosts with interfaces configured exclusively by
+#   DHCP.  If set, this will cause the name resolver configuration to be
+#   managed.
 #
 # [*gui_tools*]
 #   Are GUI tools to be installed?  true or false (default).
@@ -17,7 +27,8 @@
 #   John Florian <jflorian@doubledog.org>
 
 
-class network ($service='legacy', $gui_tools=false) {
+class network ($service='legacy', $domain=undef, $name_servers=undef,
+               $gui_tools=false) {
 
     include 'network::params'
 
@@ -43,6 +54,18 @@ class network ($service='legacy', $gui_tools=false) {
                 default => absent,
             };
 
+    }
+
+    if $name_servers != undef {
+        file { '/etc/resolv.conf':
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0644',
+            seluser => 'system_u',
+            selrole => 'object_r',
+            seltype => 'etc_t',
+            content => template('network/resolv.conf'),
+        }
     }
 
     service {
