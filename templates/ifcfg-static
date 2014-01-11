@@ -6,12 +6,19 @@ BOOTPROTO="none"
 BRIDGE="<%= @bridge %>"
 <% end -%>
 DEVICE="<%= @name %>"
+<% if !@bridge -%>
+GATEWAY="<%= @gateway %>"
+<% end -%>
 HWADDR="<%= @interface_hwaddr %>"
+<% if !@bridge -%>
 IPADDR="<%= @ip_address %>"
 IPV4_FAILURE_FATAL="yes"
 IPV6INIT="no"
+<% end -%>
 NAME="System <%= @name %>"
+<% if !@bridge -%>
 NETMASK="<%= @netmask %>"
+<% end -%>
 <% if scope.lookupvar('network::service') == "nm" -%>
 NM_CONTROLLED="yes"
 <% else -%>
