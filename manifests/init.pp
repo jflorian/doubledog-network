@@ -79,6 +79,7 @@ class network ($service='legacy', $domain=undef, $name_servers=undef,
                 'legacy'    => running,
                 default     => stopped,
             },
+            provider    => $network::params::legacy_service_provider,
             hasrestart  => true,
             hasstatus   => true;
 
