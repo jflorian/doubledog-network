@@ -20,9 +20,15 @@ class network::params {
             $manager_packages = [
                 'NetworkManager',
             ]
-            $gui_packages = [
-                'kde-plasma-networkmanagement',
-            ]
+            if $::operatingsystemrelease >= 20 {
+                $gui_packages = [
+                    'kde-plasma-nm',
+                ]
+            else {
+                $gui_packages = [
+                    'kde-plasma-networkmanagement',
+                ]
+            }
             $manager_services = [
                 'NetworkManager',
             ]
