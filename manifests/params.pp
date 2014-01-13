@@ -24,7 +24,7 @@ class network::params {
                 $gui_packages = [
                     'kde-plasma-nm',
                 ]
-            else {
+            } else {
                 $gui_packages = [
                     'kde-plasma-networkmanagement',
                 ]
