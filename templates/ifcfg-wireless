@@ -1,0 +1,20 @@
+# Network interface configuration for <%= @name %> on <%= @fqdn %>.
+# This file is managed by puppet.
+
+BOOTPROTO="dhcp"
+DEFROUTE="yes"
+ESSID="<%= @name %>"
+HWADDR="<%= @interface_hwaddr %>"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="no"
+KEY_MGMT="<%= @key_mgmt %>"
+MODE="<%= @managed %>"
+NAME="<%= @name %>"
+NM_CONTROLLED="yes"
+NOZEROCONF="yes"
+ONBOOT="yes"
+PEERDNS="<%= @peer_dns %>"
+PEERNTP="<%= @peer_ntp %>"
+PEERROUTES="yes"
+PERSISTENT_DHCLIENT="<%= @persistent_dhcp %>"
+TYPE="Wireless"
