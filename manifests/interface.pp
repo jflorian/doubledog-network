@@ -40,6 +40,11 @@
 #   Enable the Spanning Tree Protocol (STP)?  Must be one of 'yes' (default)
 #   or 'no'.  Ignored for all but the bridge templates.
 #
+# [*persistent_dhcp*]
+#   Should the DHCP client persist attempting to gain a lease if it encounters
+#   continual failure?  Must be one of 'yes' (default) or 'no'.  Ignored for
+#   the static templates.
+#
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
@@ -55,6 +60,7 @@ define network::interface (
         $peer_dns='yes',
         $peer_ntp='yes',
         $stp='yes',
+        $persistent_dhcp='yes',
     ) {
 
     # The template needs a particular macaddress fact, but it cannot do
