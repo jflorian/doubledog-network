@@ -6,19 +6,23 @@
 #
 # === Parameters
 #
+# ==== Required
+#
 # [*namevar*]
 #   Name of the interface, e.g., 'eth0'.  If template is 'wireless' this must
 #   be set to the Extended Service Set Identification (ESSID) of the wireless
-#   network.  Required.
-#
-# [*ensure*]
-#   Instance is to be 'present' (default) or 'absent'.
+#   network.
 #
 # [*template*]
 #   The particular template to be used.  Must be one of 'dhcp', 'dhcp-bridge',
 #   'static', 'static-bridge' or 'wireless'.  The 'wireless' template assumes
 #   a DHCP configuration and is only supported when $network::service is 'nm'
 #   (NetworkManager).
+#
+# ==== Optional
+#
+# [*ensure*]
+#   Instance is to be 'present' (default) or 'absent'.
 #
 # [*ip_address*]
 #   The address to be assigned to the interface.  Required for the static
@@ -29,8 +33,8 @@
 #   for the static templates and ignored for the dhcp and wireless templates.
 #
 # [*bridge*]
-#   Name of the associated bridge interface, if any.  Optional.  Ignored for
-#   the bridge and wireless templates.
+#   Name of the associated bridge interface, if any.  Ignored for the bridge
+#   and wireless templates.
 #
 # [*peer_dns*]
 #   Use the name servers provided by DHCP?  Must be one of 'yes' (default) or
@@ -68,8 +72,8 @@
 
 
 define network::interface (
+        $template,
         $ensure='present',
-        $template='standard',
         $ip_address=undef,
         $netmask=undef,
         $gateway=undef,
