@@ -54,7 +54,7 @@ class network::params {
         }
 
         default: {
-            fail ("The network module is not yet supported on $::operatingsystem.")
+            fail ("The network module is not yet supported on ${::operatingsystem}.")
         }
 
     }

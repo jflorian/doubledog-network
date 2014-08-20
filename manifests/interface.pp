@@ -94,7 +94,13 @@ define network::interface (
     # something like "<%= @macaddress_<%= name %>%>", so this little trick is
     # used here to accomplish the variable interpolation.
     $mac_fact = "macaddress_${name}"
-    $interface_hwaddr = inline_template("<%= scope.lookupvar(@mac_fact) %>")
+    $interface_hwaddr = inline_template('<%= scope.lookupvar(@mac_fact) %>')
+
+    $notify_service = $network::service ? {
+        'legacy'    => Service[$network::params::legacy_services],
+        # NetworkManager responds automatically to changes.
+        default     => undef,
+    }
 
     file { "/etc/sysconfig/network-scripts/ifcfg-${sterile_name}":
         ensure  => $ensure,
@@ -105,11 +111,7 @@ define network::interface (
         seluser => 'system_u',
         seltype => 'net_conf_t',
         content => template("network/ifcfg-${template}"),
-        notify  => $network::service ? {
-            'legacy'    => Service[$network::params::legacy_services],
-            # NetworkManager responds automatically to changes.
-            default     => undef,
-        }
+        notify  => $notify_service,
     }
 
     if $template == 'wireless' and $key_mgmt == 'WPA-PSK' {
