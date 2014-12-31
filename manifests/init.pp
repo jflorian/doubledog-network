@@ -54,8 +54,8 @@ class network (
 
     # PITA reduction
     file { '/etc/network':
-        ensure  => link,
-        target  => 'sysconfig/network-scripts/',
+        ensure => link,
+        target => 'sysconfig/network-scripts/',
     }
 
     package {
