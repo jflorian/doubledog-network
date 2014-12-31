@@ -19,9 +19,6 @@
 #   DHCP.  If set, this will cause the name resolver configuration to be
 #   managed.
 #
-# [*gui_tools*]
-#   Are GUI tools to be installed?  true or false (default).
-#
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
@@ -31,15 +28,9 @@ class network (
         $service='legacy',
         $domain=undef,
         $name_servers=undef,
-        $gui_tools=false,
     ) {
 
     include 'network::params'
-
-    $ensure_gui_packages = $gui_tools ? {
-        true        => installed,
-        default     => absent,
-    }
 
     $ensure_legacy_service = $service ? {
         'legacy'    => running,
@@ -76,9 +67,6 @@ class network (
         $network::params::manager_packages:
             ensure  => installed,
             notify  => Service[$network::params::manager_services];
-
-        $network::params::gui_packages:
-            ensure  => $ensure_gui_packages;
 
     }
 
