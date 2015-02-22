@@ -2,7 +2,7 @@
 #
 # == Define: network::interface
 #
-# Installs an interface configuration file for the network services.
+# Manages a network interface configuration.
 #
 # === Parameters
 #
@@ -37,21 +37,21 @@
 #   and wireless templates.
 #
 # [*peer_dns*]
-#   Use the name servers provided by DHCP?  Must be one of 'yes' (default) or
-#   'no'.  Ignored for the static templates.
+#   Use the name servers provided by DHCP?  Either true (default) or false.
+#   Ignored for the static templates.
 #
 # [*peer_ntp*]
-#   Use the time servers provided by DHCP?  Must be one of 'yes' (default) or
-#   'no'.  Ignored for the static templates.
+#   Use the time servers provided by DHCP?  Either true (default) or false.
+#   Ignored for the static templates.
 #
 # [*stp*]
-#   Enable the Spanning Tree Protocol (STP)?  Must be one of 'yes' (default)
-#   or 'no'.  Ignored for all but the bridge templates.
+#   Enable the Spanning Tree Protocol (STP)?  Either true (default) or false.
+#   Ignored for all but the bridge templates.
 #
 # [*persistent_dhcp*]
 #   Should the DHCP client persist attempting to gain a lease if it encounters
-#   continual failure?  Must be one of 'yes' (default) or 'no'.  Ignored for
-#   the static templates.
+#   continual failure?  Either true (default) or false.  Ignored for the
+#   static templates.
 #
 # [*key_mgmt*]
 #   Key management for wireless encryption.  Must be one of 'WPA-PSK'
@@ -69,6 +69,10 @@
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
+#
+# === Copyright
+#
+# Copyright 2010-2015 John Florian
 
 
 define network::interface (
@@ -78,14 +82,26 @@ define network::interface (
         $netmask=undef,
         $gateway=undef,
         $bridge=undef,
-        $peer_dns='yes',
-        $peer_ntp='yes',
-        $stp='yes',
-        $persistent_dhcp='yes',
+        $peer_dns=true,
+        $peer_ntp=true,
+        $stp=true,
+        $persistent_dhcp=true,
         $key_mgmt='WPA-PSK',
         $mode='Managed',
         $psk=undef,
     ) {
+
+    validate_re(
+        $template, '^((dhcp|static)(-bridge)?|wireless)$',
+        "${title}: 'template' must be one of: 'dhcp', 'dhcp-bridge', 'static', 'static-bridge' or 'wireless'"
+    )
+
+    validate_re(
+        $ensure, '^(present|absent)$',
+        "${title}: 'ensure' must be one of: 'absent' or 'present'"
+    )
+
+    validate_bool($peer_dns, $peer_ntp, $stp, $persistent_dhcp)
 
     # Sterilize the name.
     $sterile_name = regsubst($name, '[^\w]+', '_', 'G')
@@ -97,9 +113,9 @@ define network::interface (
     $interface_hwaddr = inline_template('<%= scope.lookupvar(@mac_fact) %>')
 
     $notify_service = $network::service ? {
-        'legacy'    => Service[$network::params::legacy_services],
+        'legacy' => Service[$::network::params::legacy_services],
         # NetworkManager responds automatically to changes.
-        default     => undef,
+        default  => undef,
     }
 
     file { "/etc/sysconfig/network-scripts/ifcfg-${sterile_name}":

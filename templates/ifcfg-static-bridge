@@ -19,5 +19,5 @@ NM_CONTROLLED="no"
 <% end -%>
 NOZEROCONF="yes"
 ONBOOT="yes"
-STP="<%= @stp %>"
+STP="<%= @stp ? 'yes' :'no' %>"
 TYPE="Bridge"
