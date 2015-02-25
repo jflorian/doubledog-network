@@ -24,34 +24,17 @@
 # [*ensure*]
 #   Instance is to be 'present' (default) or 'absent'.
 #
-# [*ip_address*]
-#   The address to be assigned to the interface.  Required for the static
-#   templates and ignored for the dhcp and wireless templates.
+# [*bridge*]
+#   Name of the associated bridge interface, if any.  Ignored for the bridge
+#   and wireless templates.
 #
 # [*gateway*]
 #   The default route address to be assigned to the interface.  Recommended
 #   for the static templates and ignored for the dhcp and wireless templates.
 #
-# [*bridge*]
-#   Name of the associated bridge interface, if any.  Ignored for the bridge
-#   and wireless templates.
-#
-# [*peer_dns*]
-#   Use the name servers provided by DHCP?  Either true (default) or false.
-#   Ignored for the static templates.
-#
-# [*peer_ntp*]
-#   Use the time servers provided by DHCP?  Either true (default) or false.
-#   Ignored for the static templates.
-#
-# [*stp*]
-#   Enable the Spanning Tree Protocol (STP)?  Either true (default) or false.
-#   Ignored for all but the bridge templates.
-#
-# [*persistent_dhcp*]
-#   Should the DHCP client persist attempting to gain a lease if it encounters
-#   continual failure?  Either true (default) or false.  Ignored for the
-#   static templates.
+# [*ip_address*]
+#   The address to be assigned to the interface.  Required for the static
+#   templates and ignored for the dhcp and wireless templates.
 #
 # [*key_mgmt*]
 #   Key management for wireless encryption.  Must be one of 'WPA-PSK'
@@ -62,9 +45,26 @@
 #   all but the wireless template.  Managed mode is also commonly known as
 #   infrastructure mode.
 #
+# [*peer_dns*]
+#   Use the name servers provided by DHCP?  Either true (default) or false.
+#   Ignored for the static templates.
+#
+# [*peer_ntp*]
+#   Use the time servers provided by DHCP?  Either true (default) or false.
+#   Ignored for the static templates.
+#
+# [*persistent_dhcp*]
+#   Should the DHCP client persist attempting to gain a lease if it encounters
+#   continual failure?  Either true (default) or false.  Ignored for the
+#   static templates.
+#
 # [*psk*]
 #   Pre-shared key for wireless encryption.  Ignored for all but the wireless
 #   template.
+#
+# [*stp*]
+#   Enable the Spanning Tree Protocol (STP)?  Either true (default) or false.
+#   Ignored for all but the bridge templates.
 #
 # === Authors
 #
