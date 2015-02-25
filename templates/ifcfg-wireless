@@ -1,5 +1,8 @@
-# Network interface configuration for <%= @name %> on <%= @fqdn %>.
-# This file is managed by puppet.
+# Network interface configuration for <%= @name %> on <%= @fqdn %>
+# using the "<%= @template %>" template.
+#
+# WARNING:
+#   This file is managed by puppet via the "<%= @module_name %>" module.
 
 BOOTPROTO="dhcp"
 DEFROUTE="yes"

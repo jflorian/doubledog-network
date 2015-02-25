@@ -1,11 +1,17 @@
-# Network interface configuration for <%= @name %> on <%= @fqdn %>.
-# This file is managed by puppet.
+# Network interface configuration for <%= @name %> on <%= @fqdn %>
+# using the "<%= @template %>" template.
+#
+# WARNING:
+#   This file is managed by puppet via the "<%= @module_name %>" module.
 
 BOOTPROTO="none"
 <% if @bridge -%>
 BRIDGE="<%= @bridge %>"
 <% end -%>
 DEVICE="<%= @name %>"
+<% if scope.lookupvar('network::service') == "legacy" and @eth_offload -%>
+ETHTOOL_OPTS="-K <%= @name %> <%= @eth_offload %>"
+<% end -%>
 <% if !@bridge -%>
 GATEWAY="<%= @gateway %>"
 <% end -%>

@@ -24,6 +24,10 @@
 # [*ensure*]
 #   Instance is to be 'present' (default) or 'absent'.
 #
+# [*eth_offload*]
+#   Any device-specific options supported by ethtool's -K option expressed as
+#   a simple string passed along unmodified.  E.g., "gso off".
+#
 # [*bridge*]
 #   Name of the associated bridge interface, if any.  Ignored for the bridge
 #   and wireless templates.
@@ -89,6 +93,7 @@ define network::interface (
         $key_mgmt='WPA-PSK',
         $mode='Managed',
         $psk=undef,
+        $eth_offload=undef,
     ) {
 
     validate_re(
@@ -123,8 +128,8 @@ define network::interface (
         owner   => 'root',
         group   => 'root',
         mode    => '0640',
-        selrole => 'object_r',
         seluser => 'system_u',
+        selrole => 'object_r',
         seltype => 'net_conf_t',
         content => template("network/ifcfg-${template}"),
         notify  => $notify_service,
@@ -136,10 +141,23 @@ define network::interface (
             owner   => 'root',
             group   => 'root',
             mode    => '0600',
-            selrole => 'object_r',
             seluser => 'system_u',
+            selrole => 'object_r',
             seltype => 'net_conf_t',
             content => "WPA_PSK='${psk}'\n",
+        }
+    }
+
+    if $eth_offload and $network::service == 'nm' {
+        file { "/etc/NetworkManager/dispatcher.d//00-config-${sterile_name}":
+            ensure  => $ensure,
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0755',
+            seluser => 'system_u',
+            selrole => 'object_r',
+            seltype => 'NetworkManager_initrc_exec_t',
+            content => template('network/dispatcher.sh.erb'),
         }
     }
 

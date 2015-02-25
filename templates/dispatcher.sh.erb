@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Network interface configuration for <%= @name %> on <%= @fqdn %>.
+#
+# WARNING:
+#   This file is managed by puppet via the "<%= @module_name %>" module.
+
+if [ "$2" = 'up' -a "$1" = '<%= @name %>' ]
+then
+    /sbin/ethtool -K <%= @name %> <%= @eth_offload %>
+fi
