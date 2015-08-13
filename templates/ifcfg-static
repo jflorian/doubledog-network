@@ -21,6 +21,9 @@ IPADDR="<%= @ip_address %>"
 IPV4_FAILURE_FATAL="yes"
 IPV6INIT="no"
 <% end -%>
+<% if @mac_address -%>
+MACADDR="<%= @mac_address %>"
+<% end -%>
 NAME="System <%= @name %>"
 <% if !@bridge -%>
 NETMASK="<%= @netmask %>"

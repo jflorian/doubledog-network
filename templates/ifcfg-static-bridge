@@ -16,6 +16,9 @@ HWADDR="<%= @interface_hwaddr %>"
 IPADDR="<%= @ip_address %>"
 IPV4_FAILURE_FATAL="yes"
 IPV6INIT="no"
+<% if @mac_address -%>
+MACADDR="<%= @mac_address %>"
+<% end -%>
 NAME="System <%= @name %>"
 NETMASK="<%= @netmask %>"
 <% if scope.lookupvar('network::service') == "nm" -%>

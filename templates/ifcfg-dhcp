@@ -16,6 +16,9 @@ ETHTOOL_OPTS="-K <%= @name %> <%= @eth_offload %>"
 HWADDR="<%= @interface_hwaddr %>"
 IPV4_FAILURE_FATAL="yes"
 IPV6INIT="no"
+<% if @mac_address -%>
+MACADDR="<%= @mac_address %>"
+<% end -%>
 NAME="System <%= @name %>"
 <% if scope.lookupvar('network::service') == "nm" -%>
 NM_CONTROLLED="yes"

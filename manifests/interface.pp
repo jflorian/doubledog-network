@@ -70,6 +70,11 @@
 #   Enable the Spanning Tree Protocol (STP)?  Either true (default) or false.
 #   Ignored for all but the bridge templates.
 #
+# [*mac_address*]
+#   The MAC address to be assigned to the interface.  This is not used for
+#   identifying a physical interface but rather to override what the
+#   manufacturer of the interface used.
+#
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
@@ -94,6 +99,7 @@ define network::interface (
         $mode='Managed',
         $psk=undef,
         $eth_offload=undef,
+        $mac_address=undef,
     ) {
 
     validate_re(

@@ -11,6 +11,9 @@ HWADDR="<%= @interface_hwaddr %>"
 IPV4_FAILURE_FATAL="no"
 IPV6INIT="no"
 KEY_MGMT="<%= @key_mgmt %>"
+<% if @mac_address -%>
+MACADDR="<%= @mac_address %>"
+<% end -%>
 MODE="<%= @managed %>"
 NAME="<%= @name %>"
 NM_CONTROLLED="yes"
