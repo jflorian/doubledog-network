@@ -17,39 +17,18 @@ class network::params {
 
     case $::operatingsystem {
 
-        Fedora: {
-            $legacy_packages = [
-                'initscripts',
-            ]
-            $manager_packages = [
-                'NetworkManager',
-            ]
-            $manager_services = [
-                'NetworkManager',
-            ]
+        'CentOS', 'Fedora': {
 
-            # Starting with Fedora 19, it's necessary to force the use of the
-            # systemd provider since the legacy redhat provider (which puppet
-            # seems to prefer) tends to misreport the current status.
-            # Furthermore, when referencing the classic network service with
-            # systemd (at least for enabling), it's necessary to use the
-            # '.service' suffix.
-            if $::operatingsystemrelease >= 19 {
-                $legacy_service_provider = 'systemd'
-                $legacy_services = [
-                    'network.service',
-                ]
-            } else {
-                $legacy_service_provider = 'redhat'
-                $legacy_services = [
-                    'network',
-                ]
-            }
+            $legacy_packages = 'initscripts'
+            $legacy_service_provider = 'systemd'
+            $legacy_services = 'network.service'
+            $manager_packages = 'NetworkManager'
+            $manager_services = 'NetworkManager'
 
         }
 
         default: {
-            fail ("The network module is not yet supported on ${::operatingsystem}.")
+            fail ("${title}: operating system '${::operatingsystem}' is not supported")
         }
 
     }
