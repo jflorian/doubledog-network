@@ -87,7 +87,7 @@ class network (
             mode    => '0644',
             seluser => 'system_u',
             selrole => 'object_r',
-            seltype => 'etc_t',
+            seltype => 'net_conf_t',
             content => template('network/resolv.conf'),
         }
     }
