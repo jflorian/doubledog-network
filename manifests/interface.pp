@@ -24,13 +24,13 @@
 # [*ensure*]
 #   Instance is to be 'present' (default) or 'absent'.
 #
-# [*eth_offload*]
-#   Any device-specific options supported by ethtool's -K option expressed as
-#   a simple string passed along unmodified.  E.g., "gso off".
-#
 # [*bridge*]
 #   Name of the associated bridge interface, if any.  Ignored for the bridge
 #   and wireless templates.
+#
+# [*eth_offload*]
+#   Any device-specific options supported by ethtool's -K option expressed as
+#   a simple string passed along unmodified.  E.g., "gso off".
 #
 # [*gateway*]
 #   The default route address to be assigned to the interface.  Recommended
@@ -43,6 +43,11 @@
 # [*key_mgmt*]
 #   Key management for wireless encryption.  Must be one of 'WPA-PSK'
 #   (default) or ???.  Ignored for all but the wireless template.
+#
+# [*mac_address*]
+#   The MAC address to be assigned to the interface.  This is not used for
+#   identifying a physical interface but rather to override what the
+#   manufacturer of the interface used.
 #
 # [*mode*]
 #   Wireless mode.  Must be one of 'Managed' (default) or ???.  Ignored for
@@ -70,11 +75,6 @@
 #   Enable the Spanning Tree Protocol (STP)?  Either true (default) or false.
 #   Ignored for all but the bridge templates.
 #
-# [*mac_address*]
-#   The MAC address to be assigned to the interface.  This is not used for
-#   identifying a physical interface but rather to override what the
-#   manufacturer of the interface used.
-#
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
@@ -87,19 +87,19 @@
 define network::interface (
         $template,
         $ensure='present',
-        $ip_address=undef,
-        $netmask=undef,
-        $gateway=undef,
         $bridge=undef,
+        $eth_offload=undef,
+        $gateway=undef,
+        $ip_address=undef,
+        $key_mgmt='WPA-PSK',
+        $mac_address=undef,
+        $mode='Managed',
+        $netmask=undef,
         $peer_dns=true,
         $peer_ntp=true,
-        $stp=true,
         $persistent_dhcp=true,
-        $key_mgmt='WPA-PSK',
-        $mode='Managed',
         $psk=undef,
-        $eth_offload=undef,
-        $mac_address=undef,
+        $stp=true,
     ) {
 
     validate_re(
