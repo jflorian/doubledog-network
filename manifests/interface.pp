@@ -75,6 +75,16 @@
 #   Enable the Spanning Tree Protocol (STP)?  Either true (default) or false.
 #   Ignored for all but the bridge templates.
 #
+# [*vlan*]
+#   If set with a VLAN ID, this interface will make itself a member of that
+#   VLAN, assuming the switch permits this.  Valid VLAN IDs range from 1 to
+#   4096.
+#
+#   This does not affect the name of the interface so it is necessary to
+#   include the VLAN ID as part of the "namevar", e.g., 'eth0.123'.  This
+#   ensures that your Puppet manifests can distinguish between the base
+#   Network::Interface instance and any VLAN Network::Interface instances.
+#
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
@@ -100,6 +110,7 @@ define network::interface (
         $persistent_dhcp=true,
         $psk=undef,
         $stp=true,
+        $vlan=undef,
     ) {
 
     validate_re(
@@ -114,8 +125,12 @@ define network::interface (
 
     validate_bool($peer_dns, $peer_ntp, $stp, $persistent_dhcp)
 
+    if $vlan != undef {
+        validate_integer($vlan, 4096, 1)
+    }
+
     # Sterilize the name.
-    $sterile_name = regsubst($name, '[^\w]+', '_', 'G')
+    $sterile_name = regsubst($name, '[^\w.]+', '_', 'G')
 
     # The template needs a particular macaddress fact, but it cannot do
     # something like "<%= @macaddress_<%= name %>%>", so this little trick is

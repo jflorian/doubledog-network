@@ -15,7 +15,9 @@ ETHTOOL_OPTS="-K <%= @name %> <%= @eth_offload %>"
 <% if @gateway and ! @bridge -%>
 GATEWAY="<%= @gateway %>"
 <% end -%>
+<% if ! @vlan -%>
 HWADDR="<%= @interface_hwaddr %>"
+<% end -%>
 <% if !@bridge -%>
 IPADDR="<%= @ip_address %>"
 IPV4_FAILURE_FATAL="yes"
@@ -35,4 +37,9 @@ NM_CONTROLLED="no"
 <% end -%>
 NOZEROCONF="yes"
 ONBOOT="yes"
+<% if @vlan -%>
+TYPE="Vlan"
+VLAN="yes"
+<% else -%>
 TYPE="Ethernet"
+<% end -%>

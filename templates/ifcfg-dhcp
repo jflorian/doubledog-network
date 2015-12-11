@@ -13,7 +13,9 @@ DEVICE="<%= @name %>"
 <% if scope.lookupvar('network::service') == "legacy" and @eth_offload -%>
 ETHTOOL_OPTS="-K <%= @name %> <%= @eth_offload %>"
 <% end -%>
+<% if ! @vlan -%>
 HWADDR="<%= @interface_hwaddr %>"
+<% end -%>
 IPV4_FAILURE_FATAL="yes"
 IPV6INIT="no"
 <% if @mac_address -%>
@@ -31,4 +33,9 @@ PEERDNS="<%= @peer_dns ? 'yes' :'no' %>"
 PEERNTP="<%= @peer_ntp ? 'yes' :'no' %>"
 PEERROUTES="yes"
 PERSISTENT_DHCLIENT="<%= @persistent_dhcp ? 'yes' :'no' %>"
+<% if @vlan -%>
+TYPE="Vlan"
+VLAN="yes"
+<% else -%>
 TYPE="Ethernet"
+<% end -%>
