@@ -125,8 +125,7 @@ define network::interface (
 
     $notify_service = $network::service ? {
         'legacy' => Service[$::network::params::legacy_services],
-        # NetworkManager responds automatically to changes.
-        default  => undef,
+        default  => Service[$::network::params::manager_services],
     }
 
     file { "/etc/sysconfig/network-scripts/ifcfg-${sterile_name}":
