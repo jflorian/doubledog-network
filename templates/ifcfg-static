@@ -12,7 +12,7 @@ DEVICE="<%= @name %>"
 <% if scope.lookupvar('network::service') == "legacy" and @eth_offload -%>
 ETHTOOL_OPTS="-K <%= @name %> <%= @eth_offload %>"
 <% end -%>
-<% if !@bridge -%>
+<% if @gateway and ! @bridge -%>
 GATEWAY="<%= @gateway %>"
 <% end -%>
 HWADDR="<%= @interface_hwaddr %>"
