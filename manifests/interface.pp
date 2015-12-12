@@ -126,7 +126,7 @@ define network::interface (
     validate_bool($peer_dns, $peer_ntp, $stp, $persistent_dhcp)
 
     if $vlan != undef {
-        validate_integer($vlan, 4096, 1)
+        validate_integer($vlan, 4094, 1)
     }
 
     # Sterilize the name.
