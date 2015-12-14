@@ -54,6 +54,10 @@
 #   all but the wireless template.  Managed mode is also commonly known as
 #   infrastructure mode.
 #
+# [*netmask*]
+#   The network mask for this interface.  Required for the static templates
+#   and ignored for the dhcp and wireless templates.
+#
 # [*peer_dns*]
 #   Use the name servers provided by DHCP?  Either true (default) or false.
 #   Ignored for the static templates.
