@@ -28,6 +28,10 @@
 #   Name of the associated bridge interface, if any.  Ignored for the bridge
 #   and wireless templates.
 #
+# [*country*]
+#   Country code for CRDA when using the wireless template.  Ignored for all
+#   other templates.
+#
 # [*eth_offload*]
 #   Any device-specific options supported by ethtool's -K option expressed as
 #   a simple string passed along unmodified.  E.g., "gso off".
@@ -102,6 +106,7 @@ define network::interface (
         $template,
         $ensure='present',
         $bridge=undef,
+        $country='US',
         $eth_offload=undef,
         $gateway=undef,
         $ip_address=undef,
@@ -159,16 +164,19 @@ define network::interface (
         notify  => $notify_service,
     }
 
-    if $template == 'wireless' and $key_mgmt == 'WPA-PSK' {
-        file { "/etc/sysconfig/network-scripts/keys-${sterile_name}":
-            ensure  => $ensure,
-            owner   => 'root',
-            group   => 'root',
-            mode    => '0600',
-            seluser => 'system_u',
-            selrole => 'object_r',
-            seltype => 'net_conf_t',
-            content => "WPA_PSK='${psk}'\n",
+    if $template == 'wireless' {
+        include '::network::wireless'
+        if $key_mgmt == 'WPA-PSK' {
+            file { "/etc/sysconfig/network-scripts/keys-${sterile_name}":
+                ensure  => $ensure,
+                owner   => 'root',
+                group   => 'root',
+                mode    => '0600',
+                seluser => 'system_u',
+                selrole => 'object_r',
+                seltype => 'net_conf_t',
+                content => "WPA_PSK='${psk}'\n",
+            }
         }
     }
 

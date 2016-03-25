@@ -5,6 +5,7 @@
 #   This file is managed by puppet via the "<%= @module_name %>" module.
 
 BOOTPROTO="dhcp"
+COUNTRY="<%= @country %>"
 DEFROUTE="yes"
 ESSID="<%= @name %>"
 HWADDR="<%= @interface_hwaddr %>"

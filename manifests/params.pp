@@ -22,8 +22,9 @@ class network::params {
             $legacy_packages = 'initscripts'
             $legacy_service_provider = 'systemd'
             $legacy_services = 'network.service'
-            $manager_packages = 'NetworkManager'
+            $manager_packages = ['NetworkManager', 'NetworkManager-wifi']
             $manager_services = 'NetworkManager'
+            $wireless_packages = 'crda'
 
         }
 
