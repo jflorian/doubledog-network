@@ -180,16 +180,25 @@ define network::interface (
         }
     }
 
-    if $eth_offload and $network::service == 'nm' {
-        file { "/etc/NetworkManager/dispatcher.d//00-config-${sterile_name}":
-            ensure  => $ensure,
-            owner   => 'root',
-            group   => 'root',
-            mode    => '0755',
-            seluser => 'system_u',
-            selrole => 'object_r',
-            seltype => 'NetworkManager_initrc_exec_t',
-            content => template('network/dispatcher.sh.erb'),
+    if $network::service == 'nm' {
+        # Use a dispatch script that NetworkManager can call to effect any TCP
+        # offload configuration.
+        $script = "/etc/NetworkManager/dispatcher.d/00-config-${sterile_name}"
+        if $eth_offload {
+            file { $script:
+                ensure  => $ensure,
+                owner   => 'root',
+                group   => 'root',
+                mode    => '0755',
+                seluser => 'system_u',
+                selrole => 'object_r',
+                seltype => 'NetworkManager_initrc_exec_t',
+                content => template('network/dispatcher.sh.erb'),
+            }
+        } else {
+            file { $script:
+                ensure  => absent,
+            }
         }
     }
 
