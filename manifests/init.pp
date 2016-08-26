@@ -18,6 +18,11 @@
 #   interfaces configured exclusively by DHCP.  Defaults to the $::domain
 #   fact.
 #
+# [*interfaces*]
+#   A hash whose keys are interface names and whose values are hashes
+#   comprising the same parameters you would otherwise pass to
+#   Define[network::interface].
+#
 # [*name_servers*]
 #   Array of IP address strings that provide DNS address resolution.
 #   Typically not required for hosts with interfaces configured exclusively by
@@ -37,6 +42,7 @@ class network (
         $service='legacy',
         $domain=$::domain,
         $name_servers=undef,
+        $interfaces={},
     ) inherits ::network::params {
 
     validate_re(
@@ -91,6 +97,8 @@ class network (
             content => template('network/resolv.conf'),
         }
     }
+
+    create_resources(::network::interface, $interfaces)
 
     service {
         $::network::params::legacy_services:
