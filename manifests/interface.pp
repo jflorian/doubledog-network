@@ -168,14 +168,15 @@ define network::interface (
         include '::network::wireless'
         if $key_mgmt == 'WPA-PSK' {
             file { "/etc/sysconfig/network-scripts/keys-${sterile_name}":
-                ensure  => $ensure,
-                owner   => 'root',
-                group   => 'root',
-                mode    => '0600',
-                seluser => 'system_u',
-                selrole => 'object_r',
-                seltype => 'net_conf_t',
-                content => "WPA_PSK='${psk}'\n",
+                ensure    => $ensure,
+                owner     => 'root',
+                group     => 'root',
+                mode      => '0600',
+                seluser   => 'system_u',
+                selrole   => 'object_r',
+                seltype   => 'net_conf_t',
+                content   => "WPA_PSK='${psk}'\n",
+                show_diff => false,
             }
         }
     }
