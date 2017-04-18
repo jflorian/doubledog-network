@@ -1,0 +1,14 @@
+---
+network::enable:                    true
+network::ensure:                    running
+network::interfaces:                {}
+network::legacy_packages:
+    - initscripts
+network::legacy_service:            network.service
+network::legacy_service_provider:   systemd
+network::manager_packages:
+    - NetworkManager
+    - NetworkManager-wifi
+network::manager_service:           NetworkManager
+network::wireless::packages:
+    - crda

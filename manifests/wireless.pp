@@ -13,19 +13,23 @@
 #
 # ==== Optional
 #
+# [*packages*]
+#   An array of package names needed for a wireless network installation.
+#
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
 #
 # === Copyright
 #
-# Copyright 2016 John Florian
+# Copyright 2016-2017 John Florian
 
 
 class network::wireless (
-    ) inherits ::network::params {
+        Array[String[1]]            $packages,
+    ) {
 
-    package { $::network::params::wireless_packages:
+    package { $packages:
         ensure => installed,
     }
 

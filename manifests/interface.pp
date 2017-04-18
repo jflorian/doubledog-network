@@ -99,44 +99,32 @@
 #
 # === Copyright
 #
-# Copyright 2010-2016 John Florian
+# Copyright 2010-2017 John Florian
 
 
 define network::interface (
-        $template,
-        $ensure='present',
-        $bridge=undef,
-        $country='US',
-        $eth_offload=undef,
-        $gateway=undef,
-        $ip_address=undef,
-        $key_mgmt='WPA-PSK',
-        $mac_address=undef,
-        $mode='Managed',
-        $netmask=undef,
-        $peer_dns=true,
-        $peer_ntp=true,
-        $persistent_dhcp=true,
-        $psk=undef,
-        $stp=true,
-        $vlan=undef,
+        Enum['dhcp', 'dhcp-bridge', 'static', 'static-bridge', 'wireless']
+                                    $template,
+        Enum['present', 'absent']   $ensure='present',
+        Optional[String[1]]         $bridge=undef,
+        String[2,2]                 $country='US',
+        Optional[String[1]]         $eth_offload=undef,
+        Optional[String[1]]         $gateway=undef,
+        Optional[String[1]]         $ip_address=undef,
+        Enum['WPA-PSK']             $key_mgmt='WPA-PSK',
+        Optional[String[1]]         $mac_address=undef,
+        Enum['Managed']             $mode='Managed',
+        Optional[String[1]]         $netmask=undef,
+        Boolean                     $peer_dns=true,
+        Boolean                     $peer_ntp=true,
+        Boolean                     $persistent_dhcp=true,
+        Optional[String[1]]         $psk=undef,
+        Boolean                     $stp=true,
+        # $vlan as String is a kludge for Hiera interpolation forcing values
+        # to String.
+        Optional[Variant[Integer[1, 4094], String[1]]]
+                                    $vlan=undef,
     ) {
-
-    validate_re(
-        $template, '^((dhcp|static)(-bridge)?|wireless)$',
-        "${title}: 'template' must be one of: 'dhcp', 'dhcp-bridge', 'static', 'static-bridge' or 'wireless'"
-    )
-
-    validate_re(
-        $ensure, '^(present|absent)$',
-        "${title}: 'ensure' must be one of: 'absent' or 'present'"
-    )
-
-    validate_bool($peer_dns, $peer_ntp, $stp, $persistent_dhcp)
-
-    if $vlan != undef {
-        validate_integer($vlan, 4094, 1)
-    }
 
     # Sterilize the name.
     $sterile_name = regsubst($name, '[^\w.]+', '_', 'G')
@@ -148,8 +136,8 @@ define network::interface (
     $interface_hwaddr = inline_template('<%= scope.lookupvar(@mac_fact) %>')
 
     $notify_service = $network::service ? {
-        'legacy' => Service[$::network::params::legacy_services],
-        default  => Service[$::network::params::manager_services],
+        'legacy' => Service[$network::legacy_service],
+        default  => Service[$network::manager_service],
     }
 
     file { "/etc/sysconfig/network-scripts/ifcfg-${sterile_name}":
