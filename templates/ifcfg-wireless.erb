@@ -1,8 +1,13 @@
+<%#
+This file is part of the doubledog-network Puppet module.
+Copyright 2010-2019 John Florian
+SPDX-License-Identifier: GPL-3.0-or-later
+-%>
 # Network interface configuration for <%= @name %> on <%= @fqdn %>
 # using the "<%= @template %>" template.
 #
 # WARNING:
-#   This file is managed by puppet via the "<%= @module_name %>" module.
+#   This file is managed by Puppet via the "<%= @module_name %>" module.
 
 BOOTPROTO="dhcp"
 COUNTRY="<%= @country %>"

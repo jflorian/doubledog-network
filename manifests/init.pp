@@ -78,7 +78,7 @@ class network (
             seluser => 'system_u',
             selrole => 'object_r',
             seltype => 'net_conf_t',
-            content => template('network/resolv.conf'),
+            content => template('network/resolv.conf.erb'),
         }
     }
 

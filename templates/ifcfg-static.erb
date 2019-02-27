@@ -1,28 +1,40 @@
+<%#
+This file is part of the doubledog-network Puppet module.
+Copyright 2010-2019 John Florian
+SPDX-License-Identifier: GPL-3.0-or-later
+-%>
 # Network interface configuration for <%= @name %> on <%= @fqdn %>
 # using the "<%= @template %>" template.
 #
 # WARNING:
-#   This file is managed by puppet via the "<%= @module_name %>" module.
+#   This file is managed by Puppet via the "<%= @module_name %>" module.
 
 BOOTPROTO="none"
-DEFROUTE="yes"
-DELAY="0"
+<% if @bridge -%>
+BRIDGE="<%= @bridge %>"
+<% end -%>
 DEVICE="<%= @name %>"
 <% if scope.lookupvar('network::service') == "legacy" and @eth_offload -%>
 ETHTOOL_OPTS="-K <%= @name %> <%= @eth_offload %>"
 <% end -%>
-<% if @gateway -%>
+<% if @gateway and ! @bridge -%>
 GATEWAY="<%= @gateway %>"
 <% end -%>
+<% if ! @vlan -%>
 HWADDR="<%= @interface_hwaddr %>"
+<% end -%>
+<% if !@bridge -%>
 IPADDR="<%= @ip_address %>"
 IPV4_FAILURE_FATAL="yes"
 IPV6INIT="no"
+<% end -%>
 <% if @mac_address -%>
 MACADDR="<%= @mac_address %>"
 <% end -%>
 NAME="System <%= @name %>"
+<% if !@bridge -%>
 NETMASK="<%= @netmask %>"
+<% end -%>
 <% if scope.lookupvar('network::service') == "nm" -%>
 NM_CONTROLLED="yes"
 <% else -%>
@@ -30,5 +42,9 @@ NM_CONTROLLED="no"
 <% end -%>
 NOZEROCONF="yes"
 ONBOOT="yes"
-STP="<%= @stp ? 'yes' :'no' %>"
-TYPE="Bridge"
+<% if @vlan -%>
+TYPE="Vlan"
+VLAN="yes"
+<% else -%>
+TYPE="Ethernet"
+<% end -%>

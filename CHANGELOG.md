@@ -24,6 +24,7 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 - support for Fedora 27-29
 ### Changed
 - parameter documentation moved from manifests to the `README.md` file
+- all templates now have `.erb` suffix
 ### Deprecated
 ### Removed
 - support for Fedora 24-25

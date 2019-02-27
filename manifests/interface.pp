@@ -60,7 +60,7 @@ define network::interface (
         seluser => 'system_u',
         selrole => 'object_r',
         seltype => 'net_conf_t',
-        content => template("network/ifcfg-${template}"),
+        content => template("network/ifcfg-${template}.erb"),
         notify  => $notify_service,
     }
 
