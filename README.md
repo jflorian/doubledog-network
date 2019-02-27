@@ -44,6 +44,8 @@ This module lets you manage network.
 
 **Defined types:**
 
+* [network::interface](#networkinterface-defined-type)
+
 **Data types:**
 
 **Facts:**
@@ -90,6 +92,67 @@ Array of IP address strings that provide DNS address resolution.  Typically not 
 
 
 ### Defined types
+
+#### network::interface defined type
+
+This defined type manages a network interface configuration.
+
+##### `namevar` (required)
+Name of the interface, e.g., `'eth0'`.  If *template* is `'wireless'` this must be set to the Extended Service Set Identification (ESSID) of the wireless network.
+
+##### `template` (required)
+The particular template to be used.  Must be one of `'dhcp'`, `'dhcp-bridge'`, `'static'`, `'static-bridge'` or `'wireless'`.  The `'wireless'` template assumes a DHCP configuration and is only supported when `$network::service` is `'nm'` (NetworkManager).
+
+##### `ensure`
+Instance is to be `'present'` (default) or `'absent'`.
+
+##### `bridge`
+Name of the associated bridge interface, if any.  Ignored when *template* is one of `'dhcp-bridge'`, `'static-bridge'` or `'wireless'`.
+
+##### `country`
+Country code for CRDA when *template* is `'wireless'`.  Ignored for all other templates.
+
+##### `eth_offload`
+Any device-specific options supported by `ethtool`'s `-K` option expressed as a simple string passed along unmodified.  E.g., `'gso off'`.
+
+##### `gateway`
+The default route IP address to be assigned to the interface.  Recommended when *template* is `'static'` or `'static-bridge'` and ignored for all others.
+
+##### `ip_address`
+The IP address to be assigned to the interface.  Required when *template* is `'static'` or `'static-bridge'` and ignored for all others.
+
+##### `key_mgmt`
+Key management method for wireless encryption.  Must be one of `'WPA-PSK'` (default) or ???.  Required when *template* is `'wireless'` and ignored for all others.
+
+##### `mac_address`
+The MAC address to be assigned to the interface.  This is not used for identifying/matching a physical interface but rather to override what the manufacturer assigned.
+
+##### `mode`
+Wireless mode.  Must be one of `'Managed'` (default, also known as infrastructure mode) or ???.  Required when *template* is `'wireless'` and ignored for all others.
+
+##### `netmask`
+The network mask for this interface.  Required when *template* is `'static'` or `'static-bridge'` and ignored for all others.
+
+##### `peer_dns`
+Use the name servers provided by DHCP?  Either `true` (default) or `false`.  Ignored when *template* is `'static'` or `'static-bridge'`.
+
+##### `peer_ntp`
+Use the time servers provided by DHCP?  Either true (default) or false.  Ignored when *template* is `'static'` or `'static-bridge'`.
+
+##### `persistent_dhcp`
+Should the DHCP client persist attempting to gain a lease if it encounters continual failure?  Either `true` (default) or `false`.  Ignored when *template* is `'static'` or `'static-bridge'`.
+
+##### `psk`
+Pre-shared key for wireless encryption.  Required when *template* is `'wireless'` and ignored for all others.
+
+##### `stp`
+Enable the Spanning Tree Protocol (STP)?  Either `true` (default) or `false`.  Ignored unless *template* is `'static-bridge'`.
+
+##### `vlan`
+If set with a VLAN ID, this interface will tag all outbound packets with this ID and only accept packets tagged with this ID.  Valid IDs range from 1 to 4094.
+
+This alone does not affect the name of the interface so it is necessary to make the tagged interface distinct from the base interface.  One common convention is to set *namevar* so that its the base interface name followed by a dot followed by the VLAN ID, e.g., `'eth0.123'`.
+
 
 ### Data types
 

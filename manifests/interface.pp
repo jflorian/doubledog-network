@@ -1,97 +1,7 @@
-# modules/network/manifests/interface.pp
 #
 # == Define: network::interface
 #
 # Manages a network interface configuration.
-#
-# === Parameters
-#
-# ==== Required
-#
-# [*namevar*]
-#   Name of the interface, e.g., 'eth0'.  If template is 'wireless' this must
-#   be set to the Extended Service Set Identification (ESSID) of the wireless
-#   network.
-#
-# [*template*]
-#   The particular template to be used.  Must be one of 'dhcp', 'dhcp-bridge',
-#   'static', 'static-bridge' or 'wireless'.  The 'wireless' template assumes
-#   a DHCP configuration and is only supported when $network::service is 'nm'
-#   (NetworkManager).
-#
-# ==== Optional
-#
-# [*ensure*]
-#   Instance is to be 'present' (default) or 'absent'.
-#
-# [*bridge*]
-#   Name of the associated bridge interface, if any.  Ignored for the bridge
-#   and wireless templates.
-#
-# [*country*]
-#   Country code for CRDA when using the wireless template.  Ignored for all
-#   other templates.
-#
-# [*eth_offload*]
-#   Any device-specific options supported by ethtool's -K option expressed as
-#   a simple string passed along unmodified.  E.g., "gso off".
-#
-# [*gateway*]
-#   The default route address to be assigned to the interface.  Recommended
-#   for the static templates and ignored for the dhcp and wireless templates.
-#
-# [*ip_address*]
-#   The address to be assigned to the interface.  Required for the static
-#   templates and ignored for the dhcp and wireless templates.
-#
-# [*key_mgmt*]
-#   Key management for wireless encryption.  Must be one of 'WPA-PSK'
-#   (default) or ???.  Ignored for all but the wireless template.
-#
-# [*mac_address*]
-#   The MAC address to be assigned to the interface.  This is not used for
-#   identifying a physical interface but rather to override what the
-#   manufacturer of the interface used.
-#
-# [*mode*]
-#   Wireless mode.  Must be one of 'Managed' (default) or ???.  Ignored for
-#   all but the wireless template.  Managed mode is also commonly known as
-#   infrastructure mode.
-#
-# [*netmask*]
-#   The network mask for this interface.  Required for the static templates
-#   and ignored for the dhcp and wireless templates.
-#
-# [*peer_dns*]
-#   Use the name servers provided by DHCP?  Either true (default) or false.
-#   Ignored for the static templates.
-#
-# [*peer_ntp*]
-#   Use the time servers provided by DHCP?  Either true (default) or false.
-#   Ignored for the static templates.
-#
-# [*persistent_dhcp*]
-#   Should the DHCP client persist attempting to gain a lease if it encounters
-#   continual failure?  Either true (default) or false.  Ignored for the
-#   static templates.
-#
-# [*psk*]
-#   Pre-shared key for wireless encryption.  Ignored for all but the wireless
-#   template.
-#
-# [*stp*]
-#   Enable the Spanning Tree Protocol (STP)?  Either true (default) or false.
-#   Ignored for all but the bridge templates.
-#
-# [*vlan*]
-#   If set with a VLAN ID, this interface will make itself a member of that
-#   VLAN, assuming the switch permits this.  Valid VLAN IDs range from 1 to
-#   4096.
-#
-#   This does not affect the name of the interface so it is necessary to
-#   include the VLAN ID as part of the "namevar", e.g., 'eth0.123'.  This
-#   ensures that your Puppet manifests can distinguish between the base
-#   Network::Interface instance and any VLAN Network::Interface instances.
 #
 # === Authors
 #
@@ -99,7 +9,9 @@
 #
 # === Copyright
 #
-# Copyright 2010-2017 John Florian
+# This file is part of the doubledog-network Puppet module.
+# Copyright 2010-2019 John Florian
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 
 define network::interface (
