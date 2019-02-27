@@ -3,62 +3,15 @@
 #
 # Manages a host's network configuration.
 #
-# === Parameters
-#
-# ==== Required
-#
-# ==== Optional
-#
-# [*enable*]
-#   Selected service is to be started at boot.  Either true (default) or
-#   false.
-#
-# [*ensure*]
-#   Selected service is to be 'running' (default) or 'stopped'.
-#   Alternatively, a Boolean value may also be used with true equivalent to
-#   'running' and false equivalent to 'stopped'.
-#
-# [*legacy_packages*]
-#   An array of package names needed for a legacy network installation.
-#
-# [legacy_service*]
-#   The name of the legacy network service.
-#
-# [legacy_service_provider*]
-#   The name of the Puppet provider to manage the legacy network service.
-#
-# [*manager_packages*]
-#   An array of package names needed for a NetworkManager installation.
-#
-# [manager_service*]
-#   The name of the NetworkManager service.
-#
-# [*service*]
-#   Use 'legacy' (default) or 'nm' (NetworkManager) service.
-#
-# [*domain*]
-#   Name of the network domain.  Typically not required for hosts with
-#   interfaces configured exclusively by DHCP.
-#   fact.
-#
-# [*interfaces*]
-#   A hash whose keys are interface names and whose values are hashes
-#   comprising the same parameters you would otherwise pass to
-#   Define[network::interface].
-#
-# [*name_servers*]
-#   Array of IP address strings that provide DNS address resolution.
-#   Typically not required for hosts with interfaces configured exclusively by
-#   DHCP.  If set, this will cause the name resolver configuration to be
-#   managed.
-#
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
 #
 # === Copyright
 #
-# Copyright 2010-2017 John Florian
+# This file is part of the doubledog-network Puppet module.
+# Copyright 2010-2019 John Florian
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 
 class network (

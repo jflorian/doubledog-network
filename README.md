@@ -1,6 +1,6 @@
 <!--
 This file is part of the doubledog-network Puppet module.
-Copyright 2018 John Florian <jflorian@doubledog.org>
+Copyright 2018-2019 John Florian <jflorian@doubledog.org>
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
@@ -40,6 +40,8 @@ This module lets you manage network.
 
 **Classes:**
 
+* [network](#network-class)
+
 **Defined types:**
 
 **Data types:**
@@ -48,6 +50,44 @@ This module lets you manage network.
 
 
 ### Classes
+
+#### network class
+
+This class manages a host's network configuration.
+
+##### `domain` (required)
+Name of the network domain.
+
+##### `service` (required)
+Use `'legacy'` (default) or `'nm'` (NetworkManager) service.
+
+##### `enable`
+The selected *service* is to be started at boot.  Either `true` (default) or `false`.
+
+##### `ensure`
+The selected *service* is to be `'running'` (default) or `'stopped'`.  Alternatively, a Boolean value may also be used with `true` equivalent to `'running'` and `false` equivalent to `'stopped'`.
+
+##### `interfaces`
+A hash whose keys are interface names and whose values are hashes comprising the same parameters you would otherwise pass to Define[network::interface].
+
+##### `legacy_packages`
+An array of package names needed for a legacy network installation.  The default should be correct for supported platforms.
+
+##### `legacy_service`
+The name of the legacy network service.  The default should be correct for supported platforms.
+
+##### `legacy_service_provider`
+The name of the Puppet provider to manage the legacy network service.  The default should be correct for supported platforms.
+
+##### `manager_packages`
+An array of package names needed for a NetworkManager installation.  The default should be correct for supported platforms.
+
+##### `manager_service`
+The name of the NetworkManager service.  The default should be correct for supported platforms.
+
+##### `name_servers`
+Array of IP address strings that provide DNS address resolution.  Typically not required for hosts with interfaces configured exclusively by DHCP.  If set, this will cause the name resolver configuration to be managed.
+
 
 ### Defined types
 
