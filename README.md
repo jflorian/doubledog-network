@@ -41,6 +41,7 @@ This module lets you manage network.
 **Classes:**
 
 * [network](#network-class)
+* [network::wireless](#networkwireless-class)
 
 **Defined types:**
 
@@ -89,6 +90,14 @@ The name of the NetworkManager service.  The default should be correct for suppo
 
 ##### `name_servers`
 Array of IP address strings that provide DNS address resolution.  Typically not required for hosts with interfaces configured exclusively by DHCP.  If set, this will cause the name resolver configuration to be managed.
+
+
+#### network::wireless class
+
+This class manages the packages required for wireless networking.  It is included, as needed, by the [network](#network-class) class.
+
+##### `packages`
+An array of package names needed for a wireless network installation.  The default should be correct for supported platforms.
 
 
 ### Defined types
