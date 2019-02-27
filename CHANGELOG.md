@@ -21,10 +21,12 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 
 ## [1.1.0] WIP
 ### Added
+- support for Fedora 27-29
 ### Changed
 - parameter documentation moved from manifests to the `README.md` file
 ### Deprecated
 ### Removed
+- support for Fedora 24-25
 ### Fixed
 ### Security
 

@@ -15,8 +15,9 @@
         {
             "operatingsystem": "Fedora",
             "operatingsystemrelease": [
-                "24",
-                "25"
+                "27",
+                "28",
+                "29"
             ]
         }
     ],
