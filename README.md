@@ -50,6 +50,7 @@ This module lets you manage network.
 **Data types:**
 
 * [Network::Vlan\_id](#NetworkVlan_id-data-type)
+* [Network::Vlan\_id](#NetworkTemplate-data-type)
 
 **Facts:**
 
@@ -166,6 +167,11 @@ This alone does not affect the name of the interface so it is necessary to make 
 
 
 ### Data types
+
+#### `Network::Template` data type
+
+Matches acceptable values for the *template* parameter of the [network::interface](#networkinterface-defined-type) defined type.
+
 
 #### `Network::Vlan_id` data type
 
