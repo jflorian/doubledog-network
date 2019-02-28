@@ -23,6 +23,7 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 ### Added
 - support for Fedora 27-29
 - dependency on `doubledog-ddolib`
+- `Network::Vlan_id` data type
 ### Changed
 - parameter documentation moved from manifests to the `README.md` file
 - all templates now have `.erb` suffix

@@ -49,6 +49,8 @@ This module lets you manage network.
 
 **Data types:**
 
+* [Network::Vlan\_id](#NetworkVlan_id-data-type)
+
 **Facts:**
 
 
@@ -164,6 +166,11 @@ This alone does not affect the name of the interface so it is necessary to make 
 
 
 ### Data types
+
+#### `Network::Vlan_id` data type
+
+Matches acceptable values for a VLAN ID, specifically a positive integer no less than 1 and no greater than 4094.  This also accepts a string so long as the value matches the same restrictions.
+
 
 ### Facts
 
