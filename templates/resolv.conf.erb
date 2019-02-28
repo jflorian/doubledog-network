@@ -3,14 +3,10 @@ This file is part of the doubledog-network Puppet module.
 Copyright 2010-2019 John Florian
 SPDX-License-Identifier: GPL-3.0-or-later
 -%>
-#!/bin/sh
-#
-# Network interface configuration for <%= @name %> on <%= @fqdn %>.
-#
 # WARNING:
 #   This file is managed by Puppet via the "<%= @module_name %>" module.
 
-if [ "$2" = 'up' -a "$1" = '<%= @name %>' ]
-then
-    /sbin/ethtool -K <%= @name %> <%= @eth_offload %>
-fi
+search <%= @domain %>
+<% @name_servers.each do |ipaddr| -%>
+nameserver <%= ipaddr %>
+<% end -%>

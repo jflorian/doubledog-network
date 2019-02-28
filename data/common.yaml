@@ -1,4 +1,9 @@
+# This file is part of the doubledog-network Puppet module.
+# Copyright 2017-2019 John Florian
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 ---
+
 network::enable:                    true
 network::ensure:                    running
 network::interfaces:                {}
@@ -10,5 +15,8 @@ network::manager_packages:
     - NetworkManager
     - NetworkManager-wifi
 network::manager_service:           NetworkManager
+network::name_servers:              null
+network::unmanaged:                 null
+
 network::wireless::packages:
     - crda
