@@ -32,10 +32,7 @@ define network::interface (
         Boolean                         $persistent_dhcp=true,
         Optional[String[1]]             $psk=undef,
         Boolean                         $stp=true,
-        # $vlan as String is a kludge for Hiera interpolation forcing values
-        # to String.
-        Optional[Variant[Integer[1, 4094], String[1]]]
-                                        $vlan=undef,
+        Optional[Network::Vlan_id]      $vlan=undef,
     ) {
 
     # Sterilize the name.
