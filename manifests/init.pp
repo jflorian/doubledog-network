@@ -15,8 +15,7 @@
 
 
 class network (
-        Variant[Boolean, Enum['running', 'stopped']]
-                                    $ensure,
+        Ddolib::Service::Ensure     $ensure,
         Boolean                     $enable,
         Array[String[1]]            $legacy_packages,
         String[1]                   $legacy_service,

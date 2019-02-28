@@ -16,26 +16,26 @@
 
 define network::interface (
         Enum['dhcp', 'dhcp-bridge', 'static', 'static-bridge', 'wireless']
-                                    $template,
-        Enum['present', 'absent']   $ensure='present',
-        Optional[String[1]]         $bridge=undef,
-        String[2,2]                 $country='US',
-        Optional[String[1]]         $eth_offload=undef,
-        Optional[String[1]]         $gateway=undef,
-        Optional[String[1]]         $ip_address=undef,
-        Enum['WPA-PSK']             $key_mgmt='WPA-PSK',
-        Optional[String[1]]         $mac_address=undef,
-        Enum['Managed']             $mode='Managed',
-        Optional[String[1]]         $netmask=undef,
-        Boolean                     $peer_dns=true,
-        Boolean                     $peer_ntp=true,
-        Boolean                     $persistent_dhcp=true,
-        Optional[String[1]]         $psk=undef,
-        Boolean                     $stp=true,
+                                        $template,
+        Ddolib::File::Ensure::Limited   $ensure='present',
+        Optional[String[1]]             $bridge=undef,
+        String[2,2]                     $country='US',
+        Optional[String[1]]             $eth_offload=undef,
+        Optional[String[1]]             $gateway=undef,
+        Optional[String[1]]             $ip_address=undef,
+        Enum['WPA-PSK']                 $key_mgmt='WPA-PSK',
+        Optional[String[1]]             $mac_address=undef,
+        Enum['Managed']                 $mode='Managed',
+        Optional[String[1]]             $netmask=undef,
+        Boolean                         $peer_dns=true,
+        Boolean                         $peer_ntp=true,
+        Boolean                         $persistent_dhcp=true,
+        Optional[String[1]]             $psk=undef,
+        Boolean                         $stp=true,
         # $vlan as String is a kludge for Hiera interpolation forcing values
         # to String.
         Optional[Variant[Integer[1, 4094], String[1]]]
-                                    $vlan=undef,
+                                        $vlan=undef,
     ) {
 
     # Sterilize the name.

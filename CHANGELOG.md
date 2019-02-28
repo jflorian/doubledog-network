@@ -22,9 +22,11 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 ## [1.1.0] WIP
 ### Added
 - support for Fedora 27-29
+- dependency on `doubledog-ddolib`
 ### Changed
 - parameter documentation moved from manifests to the `README.md` file
 - all templates now have `.erb` suffix
+- leverage `Ddolib` data types
 ### Deprecated
 ### Removed
 - support for Fedora 24-25
