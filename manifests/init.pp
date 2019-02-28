@@ -15,17 +15,17 @@
 
 
 class network (
+        String[1]                   $domain,
         Ddolib::Service::Ensure     $ensure,
         Boolean                     $enable,
+        Hash[String[1], Hash]       $interfaces,
         Array[String[1]]            $legacy_packages,
         String[1]                   $legacy_service,
         String[1]                   $legacy_service_provider,
         Array[String[1]]            $manager_packages,
         String[1]                   $manager_service,
+        Optional[Array[String[1]]]  $name_servers,
         Enum['legacy', 'nm']        $service,
-        String[1]                   $domain,
-        Optional[Array[String[1]]]  $name_servers=undef,
-        Hash[String[1], Hash]       $interfaces,
     ) {
 
     $ensure_legacy_service = $service ? {
