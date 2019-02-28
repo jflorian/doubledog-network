@@ -26,6 +26,7 @@ class network (
         String[1]                   $manager_service,
         Optional[Array[String[1]]]  $name_servers,
         Enum['legacy', 'nm']        $service,
+        Optional[Array[String[1]]]  $unmanaged,
     ) {
 
     $ensure_legacy_service = $service ? {
@@ -78,6 +79,24 @@ class network (
             selrole => 'object_r',
             seltype => 'net_conf_t',
             content => template('network/resolv.conf.erb'),
+        }
+    }
+
+    if $service == 'nm' {
+        if $unmanaged != undef {
+            file { '/etc/NetworkManager/conf.d/unmanaged-devices.conf':
+                owner   => 'root',
+                group   => 'root',
+                mode    => '0644',
+                seluser => 'system_u',
+                selrole => 'object_r',
+                seltype => 'NetworkManager_etc_t',
+                content => template('network/unmanaged-devices.conf.erb'),
+            }
+        } else {
+            file { '/etc/NetworkManager/conf.d/unmanaged-devices.conf':
+                ensure => 'absent',
+            }
         }
     }
 

@@ -16,5 +16,7 @@ network::manager_packages:
     - NetworkManager-wifi
 network::manager_service:           NetworkManager
 network::name_servers:              null
+network::unmanaged:                 null
+
 network::wireless::packages:
     - crda

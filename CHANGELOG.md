@@ -25,6 +25,7 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 - dependency on `doubledog-ddolib`
 - `Network::Vlan_id` data type
 - `Network::Template` data type
+- `network::interface::unmanaged` parameter
 ### Changed
 - parameter documentation moved from manifests to the `README.md` file
 - all templates now have `.erb` suffix

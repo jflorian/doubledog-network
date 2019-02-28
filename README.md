@@ -94,6 +94,9 @@ The name of the NetworkManager service.  The default should be correct for suppo
 ##### `name_servers`
 Array of IP address strings that provide DNS address resolution.  Typically not required for hosts with interfaces configured exclusively by DHCP.  If set, this will cause the name resolver configuration to be managed.
 
+##### `unmanaged`
+Array of strings stating which network interface devices, if any, that NetworkManager is to leave unmanaged.  The format for each is described in the section called "Device List Format" of NetworkManager.conf(5).  This is ignored if *service* is `'legacy'`.
+
 
 #### network::wireless class
 
