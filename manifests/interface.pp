@@ -15,8 +15,7 @@
 
 
 define network::interface (
-        Enum['dhcp', 'dhcp-bridge', 'static', 'static-bridge', 'wireless']
-                                        $template,
+        Network::Template               $template,
         Ddolib::File::Ensure::Limited   $ensure='present',
         Optional[String[1]]             $bridge=undef,
         String[2,2]                     $country='US',

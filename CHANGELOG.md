@@ -30,6 +30,7 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 - all templates now have `.erb` suffix
 - leverage `Ddolib` data types
 - `network::interface::vlan_id` now uses the new `Network::Vlan_id` data type
+- `network::interface::template` now uses the new `Network::Template` data type
 ### Deprecated
 ### Removed
 - support for Fedora 24-25
