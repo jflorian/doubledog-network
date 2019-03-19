@@ -101,6 +101,9 @@ class network (
                 ensure  => $unmanaged_ensure,
                 content => template('network/unmanaged-devices.conf.erb'),
                 ;
+            '/etc/NetworkManager/conf.d/wifi_rand_mac.conf':
+                content => template('network/wifi_rand_mac.conf.erb'),
+                ;
         }
     }
 
