@@ -83,20 +83,20 @@ class network (
     }
 
     if $service == 'nm' {
-        if $unmanaged != undef {
-            file { '/etc/NetworkManager/conf.d/unmanaged-devices.conf':
-                owner   => 'root',
-                group   => 'root',
-                mode    => '0644',
-                seluser => 'system_u',
-                selrole => 'object_r',
-                seltype => 'NetworkManager_etc_t',
-                content => template('network/unmanaged-devices.conf.erb'),
-            }
+        if $unmanaged != [] {
+            $unmanaged_ensure = 'present'
         } else {
-            file { '/etc/NetworkManager/conf.d/unmanaged-devices.conf':
-                ensure => 'absent',
-            }
+            $unmanaged_ensure = 'absent'
+        }
+        file { '/etc/NetworkManager/conf.d/unmanaged-devices.conf':
+            ensure  => $unmanaged_ensure,
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0644',
+            seluser => 'system_u',
+            selrole => 'object_r',
+            seltype => 'NetworkManager_etc_t',
+            content => template('network/unmanaged-devices.conf.erb'),
         }
     }
 
