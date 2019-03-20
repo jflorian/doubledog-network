@@ -83,20 +83,27 @@ class network (
     }
 
     if $service == 'nm' {
-        if $unmanaged != undef {
-            file { '/etc/NetworkManager/conf.d/unmanaged-devices.conf':
+        if $unmanaged != [] {
+            $unmanaged_ensure = 'present'
+        } else {
+            $unmanaged_ensure = 'absent'
+        }
+        file {
+            default:
                 owner   => 'root',
                 group   => 'root',
                 mode    => '0644',
                 seluser => 'system_u',
                 selrole => 'object_r',
                 seltype => 'NetworkManager_etc_t',
+                ;
+            '/etc/NetworkManager/conf.d/unmanaged-devices.conf':
+                ensure  => $unmanaged_ensure,
                 content => template('network/unmanaged-devices.conf.erb'),
-            }
-        } else {
-            file { '/etc/NetworkManager/conf.d/unmanaged-devices.conf':
-                ensure => 'absent',
-            }
+                ;
+            '/etc/NetworkManager/conf.d/wifi_rand_mac.conf':
+                content => template('network/wifi_rand_mac.conf.erb'),
+                ;
         }
     }
 
