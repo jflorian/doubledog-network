@@ -61,7 +61,7 @@ define network::interface (
     }
 
     if $template == 'wireless' {
-        include '::network::wireless'
+        include 'network::wireless'
         if $key_mgmt == 'WPA-PSK' {
             file { "/etc/sysconfig/network-scripts/keys-${sterile_name}":
                 ensure    => $ensure,

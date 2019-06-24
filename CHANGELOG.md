@@ -23,6 +23,7 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 ### Added
 - Fedora 30 support
 ### Changed
+- eliminated a few absolute namespace references (no longer needed with modern Puppet versions)
 ### Deprecated
 ### Removed
 - Fedora 27 support
