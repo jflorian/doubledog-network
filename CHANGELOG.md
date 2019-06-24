@@ -21,6 +21,7 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 
 ## [1.2.0] WIP
 ### Added
+- Fedora 30 support
 ### Changed
 ### Deprecated
 ### Removed
