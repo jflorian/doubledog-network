@@ -74,7 +74,7 @@ The selected *service* is to be started at boot.  Either `true` (default) or `fa
 The selected *service* is to be `'running'` (default) or `'stopped'`.  Alternatively, a Boolean value may also be used with `true` equivalent to `'running'` and `false` equivalent to `'stopped'`.
 
 ##### `interfaces`
-A hash whose keys are interface names and whose values are hashes comprising the same parameters you would otherwise pass to Define[network::interface].
+A hash whose keys are interface names and whose values are hashes comprising the same parameters you would otherwise pass to the [network::interface](#networkinterface-defined-type) defined type.
 
 ##### `legacy_packages`
 An array of package names needed for a legacy network installation.  The default should be correct for supported platforms.
