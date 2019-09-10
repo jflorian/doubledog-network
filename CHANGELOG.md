@@ -29,6 +29,7 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 ### Removed
 - Fedora 27 support
 ### Fixed
+- NetworkManager may not always immediately realize configuration changes.
 ### Security
 
 ## [1.1.1] 2019-03-20
