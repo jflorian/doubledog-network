@@ -24,6 +24,7 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 - Fedora 30 support
 ### Changed
 - eliminated a few absolute namespace references (no longer needed with modern Puppet versions)
+- The `dhcp` interface template now supports having a static IP address bound to the device in addition to the dynamically obtained one.  Supported with the `nm` service and untested with the `legacy` service.
 ### Deprecated
 ### Removed
 - Fedora 27 support
