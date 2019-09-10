@@ -134,7 +134,7 @@ Any device-specific options supported by `ethtool`'s `-K` option expressed as a 
 The default route IP address to be assigned to the interface.  Recommended when *template* is `'static'` or `'static-bridge'` and ignored for all others.
 
 ##### `ip_address`
-The IP address to be assigned to the interface.  Required when *template* is `'static'` or `'static-bridge'` and ignored for all others.
+The IP address to be assigned to the interface.  Required when *template* is `'static'` or `'static-bridge'`.  Optional when *template* is `'dhcp'` (to allow both a dynamic and static addresses concurrently).  Ignored for all other values.
 
 ##### `key_mgmt`
 Key management method for wireless encryption.  Must be one of `'WPA-PSK'` (default) or ???.  Required when *template* is `'wireless'` and ignored for all others.
@@ -146,7 +146,7 @@ The MAC address to be assigned to the interface.  This is not used for identifyi
 Wireless mode.  Must be one of `'Managed'` (default, also known as infrastructure mode) or ???.  Required when *template* is `'wireless'` and ignored for all others.
 
 ##### `netmask`
-The network mask for this interface.  Required when *template* is `'static'` or `'static-bridge'` and ignored for all others.
+The network mask for this interface.  Required when *template* is `'static'` or `'static-bridge'`.  Optional when *template* is `'dhcp'` (to allow both a dynamic and static addresses concurrently).  Ignored for all other values.
 
 ##### `peer_dns`
 Use the name servers provided by DHCP?  Either `true` (default) or `false`.  Ignored when *template* is `'static'` or `'static-bridge'`.
