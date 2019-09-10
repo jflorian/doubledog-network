@@ -43,9 +43,13 @@ define network::interface (
     $mac_fact = "macaddress_${name}"
     $interface_hwaddr = inline_template('<%= scope.lookupvar(@mac_fact) %>')
 
-    $notify_service = $network::service ? {
+    $subscribers = $network::service ? {
         'legacy' => Service[$network::legacy_service],
-        default  => Service[$network::manager_service],
+        default  => [
+            Exec["reconnect ${sterile_name}"],
+            Exec["reload ${sterile_name}"],
+            Exec["disconnect ${sterile_name}"],
+        ]
     }
 
     file { "/etc/sysconfig/network-scripts/ifcfg-${sterile_name}":
@@ -57,7 +61,7 @@ define network::interface (
         selrole => 'object_r',
         seltype => 'net_conf_t',
         content => template("network/ifcfg-${template}.erb"),
-        notify  => $notify_service,
+        notify  => $subscribers,
     }
 
     if $template == 'wireless' {
@@ -96,6 +100,26 @@ define network::interface (
             file { $script:
                 ensure  => absent,
             }
+        }
+        # React to realize changes immediately.
+        exec {
+            default:
+                path        => '/usr/bin:/bin:/usr/sbin:/sbin',
+                refreshonly => true,
+                ;
+            "reload ${sterile_name}":
+                command => "nmcli connection reload ${sterile_name}",
+                before  => Exec["disconnect ${sterile_name}"],
+                ;
+            # This is brutish, but the only means I could find to affect the
+            # runtime state to fully match the configured state.
+            "disconnect ${sterile_name}":
+                command => "nmcli device disconnect ${sterile_name}",
+                before  => Exec["reconnect ${sterile_name}"],
+                ;
+            "reconnect ${sterile_name}":
+                command => "nmcli device connect ${sterile_name}",
+                ;
         }
     }
 
