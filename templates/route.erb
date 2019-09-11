@@ -1,0 +1,16 @@
+<%#
+This file is part of the doubledog-network Puppet module.
+Copyright 2019 John Florian
+SPDX-License-Identifier: GPL-3.0-or-later
+-%>
+# Static routing configuration for <%= @name %> on <%= @fqdn %>.
+#
+# WARNING:
+#   This file is managed by Puppet via the "<%= @module_name %>" module.
+
+<% @routes.each_with_index do |(k, v), i| -%>
+# <%= k %>
+ADDRESS<%= i %>=<%= v['address'] %>
+NETMASK<%= i %>=<%= v['netmask'] %>
+
+<% end -%>

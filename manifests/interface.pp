@@ -30,6 +30,7 @@ define network::interface (
         Boolean                         $peer_ntp=true,
         Boolean                         $persistent_dhcp=true,
         Optional[String[1]]             $psk=undef,
+        Optional[Hash[String[1], Hash]] $routes=undef,
         Boolean                         $stp=true,
         Optional[Network::Vlan_id]      $vlan=undef,
     ) {
@@ -52,16 +53,34 @@ define network::interface (
         ]
     }
 
-    file { "/etc/sysconfig/network-scripts/ifcfg-${sterile_name}":
-        ensure  => $ensure,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0640',
-        seluser => 'system_u',
-        selrole => 'object_r',
-        seltype => 'net_conf_t',
-        content => template("network/ifcfg-${template}.erb"),
-        notify  => $subscribers,
+    $routes_ensure = $routes ? {
+        undef   => 'absent',
+        default => 'present'
+    }
+
+    $routes_content = $routes ? {
+        undef   => undef,
+        default => template("network/route.erb")
+    }
+
+    file {
+        default:
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0640',
+            seluser => 'system_u',
+            selrole => 'object_r',
+            seltype => 'net_conf_t',
+            notify  => $subscribers,
+            ;
+        "/etc/sysconfig/network-scripts/ifcfg-${sterile_name}":
+            ensure  => $ensure,
+            content => template("network/ifcfg-${template}.erb"),
+            ;
+        "/etc/sysconfig/network-scripts/route-${sterile_name}":
+            ensure  => $routes_ensure,
+            content => $routes_content,
+            ;
     }
 
     if $template == 'wireless' {
