@@ -1,10 +1,12 @@
 {
     "name": "doubledog-network",
-    "version": "1.1.1",
+    "version": "2.0.0",
     "author": "John Florian",
-    "license": "GPL-3.0",
     "summary": "A module to manage network services and interfaces",
+    "license": "GPL-3.0",
     "source": "https://www.doubledog.org/git/puppet-network.git",
+    "project_page": "https://github.com/jflorian/doubledog-network",
+    "issues_url": "https://github.com/jflorian/doubledog-network/issues",
     "operatingsystem_support": [
         {
             "operatingsystem": "CentOS",
@@ -15,9 +17,9 @@
         {
             "operatingsystem": "Fedora",
             "operatingsystemrelease": [
-                "27",
                 "28",
-                "29"
+                "29",
+                "30"
             ]
         }
     ],

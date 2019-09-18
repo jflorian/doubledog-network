@@ -107,7 +107,7 @@ class network (
         }
     }
 
-    create_resources(::network::interface, $interfaces)
+    create_resources('network::interface', $interfaces)
 
     service {
         $legacy_service:

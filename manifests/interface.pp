@@ -30,6 +30,7 @@ define network::interface (
         Boolean                         $peer_ntp=true,
         Boolean                         $persistent_dhcp=true,
         Optional[String[1]]             $psk=undef,
+        Optional[Hash[String[1], Hash]] $routes=undef,
         Boolean                         $stp=true,
         Optional[Network::Vlan_id]      $vlan=undef,
     ) {
@@ -43,25 +44,47 @@ define network::interface (
     $mac_fact = "macaddress_${name}"
     $interface_hwaddr = inline_template('<%= scope.lookupvar(@mac_fact) %>')
 
-    $notify_service = $network::service ? {
+    $subscribers = $network::service ? {
         'legacy' => Service[$network::legacy_service],
-        default  => Service[$network::manager_service],
+        default  => [
+            Exec["reconnect ${sterile_name}"],
+            Exec["reload ${sterile_name}"],
+            Exec["disconnect ${sterile_name}"],
+        ]
     }
 
-    file { "/etc/sysconfig/network-scripts/ifcfg-${sterile_name}":
-        ensure  => $ensure,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0640',
-        seluser => 'system_u',
-        selrole => 'object_r',
-        seltype => 'net_conf_t',
-        content => template("network/ifcfg-${template}.erb"),
-        notify  => $notify_service,
+    $routes_ensure = $routes ? {
+        undef   => 'absent',
+        default => 'present'
+    }
+
+    $routes_content = $routes ? {
+        undef   => undef,
+        default => template("network/route.erb")
+    }
+
+    file {
+        default:
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0640',
+            seluser => 'system_u',
+            selrole => 'object_r',
+            seltype => 'net_conf_t',
+            notify  => $subscribers,
+            ;
+        "/etc/sysconfig/network-scripts/ifcfg-${sterile_name}":
+            ensure  => $ensure,
+            content => template("network/ifcfg-${template}.erb"),
+            ;
+        "/etc/sysconfig/network-scripts/route-${sterile_name}":
+            ensure  => $routes_ensure,
+            content => $routes_content,
+            ;
     }
 
     if $template == 'wireless' {
-        include '::network::wireless'
+        include 'network::wireless'
         if $key_mgmt == 'WPA-PSK' {
             file { "/etc/sysconfig/network-scripts/keys-${sterile_name}":
                 ensure    => $ensure,
@@ -96,6 +119,26 @@ define network::interface (
             file { $script:
                 ensure  => absent,
             }
+        }
+        # React to realize changes immediately.
+        exec {
+            default:
+                path        => '/usr/bin:/bin:/usr/sbin:/sbin',
+                refreshonly => true,
+                ;
+            "reload ${sterile_name}":
+                command => "nmcli connection reload ${sterile_name}",
+                before  => Exec["disconnect ${sterile_name}"],
+                ;
+            # This is brutish, but the only means I could find to affect the
+            # runtime state to fully match the configured state.
+            "disconnect ${sterile_name}":
+                command => "nmcli device disconnect ${sterile_name}",
+                before  => Exec["reconnect ${sterile_name}"],
+                ;
+            "reconnect ${sterile_name}":
+                command => "nmcli device connect ${sterile_name}",
+                ;
         }
     }
 

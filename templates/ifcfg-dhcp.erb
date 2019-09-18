@@ -21,12 +21,18 @@ ETHTOOL_OPTS="-K <%= @name %> <%= @eth_offload %>"
 <% if ! @vlan -%>
 HWADDR="<%= @interface_hwaddr %>"
 <% end -%>
+<% if @ip_address -%>
+IPADDR="<%= @ip_address %>"
+<% end -%>
 IPV4_FAILURE_FATAL="yes"
 IPV6INIT="no"
 <% if @mac_address -%>
 MACADDR="<%= @mac_address %>"
 <% end -%>
 NAME="System <%= @name %>"
+<% if @netmask -%>
+NETMASK="<%= @netmask %>"
+<% end -%>
 <% if scope.lookupvar('network::service') == "nm" -%>
 NM_CONTROLLED="yes"
 <% else -%>

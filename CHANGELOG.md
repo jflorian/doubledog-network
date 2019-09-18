@@ -1,11 +1,11 @@
 <!--
-# This file is part of the doubledog-network Puppet module.
-# Copyright 2018-2019 John Florian
-# SPDX-License-Identifier: GPL-3.0-or-later
+This file is part of the doubledog-network Puppet module.
+Copyright 2018-2019 John Florian
+SPDX-License-Identifier: GPL-3.0-or-later
 
 Template
 
-## [VERSION] DATE/WIP
+## [VERSION] WIP
 ### Added
 ### Changed
 ### Deprecated
@@ -18,6 +18,19 @@ Template
 # Change log
 
 All notable changes to this project (since v1.0.0) will be documented in this file.  The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
+
+## [2.0.0] 2019-09-18
+### Added
+- Fedora 30 support
+- `network::interface::routes` parameter and support for static routes
+### Changed
+- eliminated a few absolute namespace references (no longer needed with modern Puppet versions)
+- The `dhcp` interface template now supports having a static IP address bound to the device in addition to the dynamically obtained one.  Supported with the `nm` service and untested with the `legacy` service.
+- connections via NetworkManager are now realized immediately regardless of the `monitor-connection-files` setting
+### Removed
+- Fedora 27 support
+### Fixed
+- NetworkManager may not always immediately realize configuration changes.
 
 ## [1.1.1] 2019-03-20
 ### Fixed

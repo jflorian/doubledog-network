@@ -74,7 +74,7 @@ The selected *service* is to be started at boot.  Either `true` (default) or `fa
 The selected *service* is to be `'running'` (default) or `'stopped'`.  Alternatively, a Boolean value may also be used with `true` equivalent to `'running'` and `false` equivalent to `'stopped'`.
 
 ##### `interfaces`
-A hash whose keys are interface names and whose values are hashes comprising the same parameters you would otherwise pass to Define[network::interface].
+A hash whose keys are interface names and whose values are hashes comprising the same parameters you would otherwise pass to the [network::interface](#networkinterface-defined-type) defined type.
 
 ##### `legacy_packages`
 An array of package names needed for a legacy network installation.  The default should be correct for supported platforms.
@@ -134,7 +134,7 @@ Any device-specific options supported by `ethtool`'s `-K` option expressed as a 
 The default route IP address to be assigned to the interface.  Recommended when *template* is `'static'` or `'static-bridge'` and ignored for all others.
 
 ##### `ip_address`
-The IP address to be assigned to the interface.  Required when *template* is `'static'` or `'static-bridge'` and ignored for all others.
+The IP address to be assigned to the interface.  Required when *template* is `'static'` or `'static-bridge'`.  Optional when *template* is `'dhcp'` (to allow both a dynamic and static addresses concurrently).  Ignored for all other values.
 
 ##### `key_mgmt`
 Key management method for wireless encryption.  Must be one of `'WPA-PSK'` (default) or ???.  Required when *template* is `'wireless'` and ignored for all others.
@@ -146,7 +146,7 @@ The MAC address to be assigned to the interface.  This is not used for identifyi
 Wireless mode.  Must be one of `'Managed'` (default, also known as infrastructure mode) or ???.  Required when *template* is `'wireless'` and ignored for all others.
 
 ##### `netmask`
-The network mask for this interface.  Required when *template* is `'static'` or `'static-bridge'` and ignored for all others.
+The network mask for this interface.  Required when *template* is `'static'` or `'static-bridge'`.  Optional when *template* is `'dhcp'` (to allow both a dynamic and static addresses concurrently).  Ignored for all other values.
 
 ##### `peer_dns`
 Use the name servers provided by DHCP?  Either `true` (default) or `false`.  Ignored when *template* is `'static'` or `'static-bridge'`.
@@ -159,6 +159,9 @@ Should the DHCP client persist attempting to gain a lease if it encounters conti
 
 ##### `psk`
 Pre-shared key for wireless encryption.  Required when *template* is `'wireless'` and ignored for all others.
+
+##### `routes`
+Static routes for this interface expressed as a hash whose keys are arbitrary and may be used to describe each route.  The corresponding value for each such key must be another hash whose keys must include `'address'` and `'netmask'` with strings providing the appropriate values to define the route.  The default is to have no static routes.
 
 ##### `stp`
 Enable the Spanning Tree Protocol (STP)?  Either `true` (default) or `false`.  Ignored unless *template* is `'static-bridge'`.
