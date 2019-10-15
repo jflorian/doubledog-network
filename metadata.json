@@ -1,6 +1,6 @@
 {
     "name": "doubledog-network",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "author": "John Florian",
     "summary": "A module to manage network services and interfaces",
     "license": "GPL-3.0",

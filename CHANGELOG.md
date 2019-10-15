@@ -19,14 +19,9 @@ Template
 
 All notable changes to this project (since v1.0.0) will be documented in this file.  The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [2.1.0] WIP
-### Added
+## [2.1.0] 2019-10-15
 ### Changed
 - `network::interface::routes` parameter now also supports specifying `gateway`, `metric` and `options` for static routes
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [2.0.0] 2019-09-18
 ### Added
