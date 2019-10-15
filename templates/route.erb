@@ -12,5 +12,14 @@ SPDX-License-Identifier: GPL-3.0-or-later
 # <%= k %>
 ADDRESS<%= i %>=<%= v['address'] %>
 NETMASK<%= i %>=<%= v['netmask'] %>
+<% if v['gateway'] -%>
+GATEWAY<%= i %>=<%= v['gateway'] %>
+<% end -%>
+<% if v['metric'] -%>
+METRIC<%= i %>=<%= v['metric'] %>
+<% end -%>
+<% if v['options'] -%>
+OPTIONS<%= i %>=<%= v['options'] %>
+<% end -%>
 
 <% end -%>
