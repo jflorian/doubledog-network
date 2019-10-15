@@ -161,7 +161,7 @@ Should the DHCP client persist attempting to gain a lease if it encounters conti
 Pre-shared key for wireless encryption.  Required when *template* is `'wireless'` and ignored for all others.
 
 ##### `routes`
-Static routes for this interface expressed as a hash whose keys are arbitrary and may be used to describe each route.  The corresponding value for each such key must be another hash whose keys must include `'address'` and `'netmask'` with strings providing the appropriate values to define the route.  The default is to have no static routes.
+Static routes for this interface expressed as a hash whose keys are arbitrary and may be used to describe each route.  The corresponding value for each such key must be another hash whose keys must include `'address'` and `'netmask'` with strings providing the appropriate values to define the route.  This same hash may also include `gateway`, `metric` and `options` to further define the static route.  The default is to have no static routes.
 
 ##### `stp`
 Enable the Spanning Tree Protocol (STP)?  Either `true` (default) or `false`.  Ignored unless *template* is `'static-bridge'`.
