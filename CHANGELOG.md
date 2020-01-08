@@ -19,15 +19,18 @@ Template
 
 All notable changes to this project (since v1.0.0) will be documented in this file.  The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [2.1.1] WIP
+## [3.0.0] WIP
 ### Added
+- `network::interface::essid` parameter
 ### Changed
+- BREAKING: wireless interfaces must now have `$namevar` set to the device name (e.g., `wlan0`) instead of the ESSID which must now instead be set via the new parameter (above)
 ### Deprecated
 ### Removed
 ### Fixed
 - `network::wireless` class now ensures that `wpa_supplicant` package is installed
     - Fedora Server 31 setup failed to associate with an WAP without this because it wasn't already installed like with older Minimal images.
 - `wireless` template failed to set `MODE=` correctly (or at all)
+- disconnect/reconnect of device fails for wireless interfaces because NM wants a device name here, not a connection name or ESSID
 ### Security
 
 ## [2.1.0] 2019-10-15

@@ -10,7 +10,7 @@
 # === Copyright
 #
 # This file is part of the doubledog-network Puppet module.
-# Copyright 2010-2019 John Florian
+# Copyright 2010-2020 John Florian
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
@@ -19,6 +19,7 @@ define network::interface (
         Ddolib::File::Ensure::Limited   $ensure='present',
         Optional[String[1]]             $bridge=undef,
         String[2,2]                     $country='US',
+        Optional[String[1]]             $essid=undef,
         Optional[String[1]]             $eth_offload=undef,
         Optional[String[1]]             $gateway=undef,
         Optional[String[1]]             $ip_address=undef,
