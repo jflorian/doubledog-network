@@ -27,6 +27,7 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 ### Fixed
 - `network::wireless` class now ensures that `wpa_supplicant` package is installed
     - Fedora Server 31 setup failed to associate with an WAP without this because it wasn't already installed like with older Minimal images.
+- `wireless` template failed to set `MODE=` correctly (or at all)
 ### Security
 
 ## [2.1.0] 2019-10-15

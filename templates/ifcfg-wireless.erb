@@ -1,6 +1,6 @@
 <%#
 This file is part of the doubledog-network Puppet module.
-Copyright 2010-2019 John Florian
+Copyright 2010-2020 John Florian
 SPDX-License-Identifier: GPL-3.0-or-later
 -%>
 # Network interface configuration for <%= @name %> on <%= @fqdn %>
@@ -20,7 +20,7 @@ KEY_MGMT="<%= @key_mgmt %>"
 <% if @mac_address -%>
 MACADDR="<%= @mac_address %>"
 <% end -%>
-MODE="<%= @managed %>"
+MODE="<%= @mode %>"
 NAME="<%= @name %>"
 NM_CONTROLLED="yes"
 NOZEROCONF="yes"
