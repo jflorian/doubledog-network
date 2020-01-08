@@ -10,7 +10,7 @@
 # === Copyright
 #
 # This file is part of the doubledog-network Puppet module.
-# Copyright 2010-2019 John Florian
+# Copyright 2010-2020 John Florian
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
@@ -38,11 +38,7 @@ define network::interface (
     # Sterilize the name.
     $sterile_name = regsubst($name, '[^\w.]+', '_', 'G')
 
-    # The template needs a particular macaddress fact, but it cannot do
-    # something like "<%= @macaddress_<%= name %>%>", so this little trick is
-    # used here to accomplish the variable interpolation.
-    $mac_fact = "macaddress_${name}"
-    $interface_hwaddr = inline_template('<%= scope.lookupvar(@mac_fact) %>')
+    $interface_hwaddr = $facts['networking']['interfaces'][$name]['mac']
 
     $subscribers = $network::service ? {
         'legacy' => Service[$network::legacy_service],
