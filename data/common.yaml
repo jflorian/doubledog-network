@@ -1,5 +1,5 @@
 # This file is part of the doubledog-network Puppet module.
-# Copyright 2017-2019 John Florian
+# Copyright 2017-2020 John Florian
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 ---
@@ -20,3 +20,4 @@ network::unmanaged:                 []
 
 network::wireless::packages:
     - crda
+    - wpa_supplicant
