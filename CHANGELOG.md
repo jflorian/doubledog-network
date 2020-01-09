@@ -24,11 +24,13 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 - `network::interface::device` parameter
 - `network::interface::essid` parameter
 - CentOS 8 support
+- Fedora 31 support
 ### Changed
 - BREAKING: wireless interfaces must now have `$namevar` set to the device name (e.g., `wlan0`) instead of the ESSID which must now instead be set via the new parameter (above)
 - `network::interface::device` parameter makes it possible for `network::interface::namevar` to be arbitrary now
 ### Deprecated
 ### Removed
+- Fedora 28 support
 ### Fixed
 - `network::wireless` class now ensures that `wpa_supplicant` package is installed
     - Fedora Server 31 setup failed to associate with an WAP without this because it wasn't already installed like with older Minimal images.
