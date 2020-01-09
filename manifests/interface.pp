@@ -59,7 +59,7 @@ define network::interface (
 
     $routes_content = $routes ? {
         undef   => undef,
-        default => template("network/route.erb")
+        default => template('network/route.erb')
     }
 
     file {
