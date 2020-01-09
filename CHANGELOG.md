@@ -23,6 +23,7 @@ All notable changes to this project (since v1.0.0) will be documented in this fi
 ### Added
 - `network::interface::device` parameter
 - `network::interface::essid` parameter
+- CentOS 8 support
 ### Changed
 - BREAKING: wireless interfaces must now have `$namevar` set to the device name (e.g., `wlan0`) instead of the ESSID which must now instead be set via the new parameter (above)
 - `network::interface::device` parameter makes it possible for `network::interface::namevar` to be arbitrary now
