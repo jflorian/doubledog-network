@@ -1,6 +1,6 @@
 <%#
 This file is part of the doubledog-network Puppet module.
-Copyright 2010-2019 John Florian
+Copyright 2010-2020 John Florian
 SPDX-License-Identifier: GPL-3.0-or-later
 -%>
 # Network interface configuration for <%= @name %> on <%= @fqdn %>
@@ -12,7 +12,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 BOOTPROTO="none"
 DEFROUTE="yes"
 DELAY="0"
-DEVICE="<%= @name %>"
+DEVICE="<%= @device %>"
 <% if scope.lookupvar('network::service') == "legacy" and @eth_offload -%>
 ETHTOOL_OPTS="-K <%= @name %> <%= @eth_offload %>"
 <% end -%>

@@ -1,6 +1,6 @@
 {
     "name": "doubledog-network",
-    "version": "2.1.0",
+    "version": "3.0.0",
     "author": "John Florian",
     "summary": "A module to manage network services and interfaces",
     "license": "GPL-3.0",
@@ -11,15 +11,16 @@
         {
             "operatingsystem": "CentOS",
             "operatingsystemmajrelease": [
-                "7"
+                "7",
+                "8"
             ]
         },
         {
             "operatingsystem": "Fedora",
             "operatingsystemrelease": [
-                "28",
                 "29",
-                "30"
+                "30",
+                "31"
             ]
         }
     ],

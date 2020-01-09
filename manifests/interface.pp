@@ -10,7 +10,7 @@
 # === Copyright
 #
 # This file is part of the doubledog-network Puppet module.
-# Copyright 2010-2019 John Florian
+# Copyright 2010-2020 John Florian
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
@@ -19,6 +19,8 @@ define network::interface (
         Ddolib::File::Ensure::Limited   $ensure='present',
         Optional[String[1]]             $bridge=undef,
         String[2,2]                     $country='US',
+        Optional[String[1]]             $device=$title,
+        Optional[String[1]]             $essid=undef,
         Optional[String[1]]             $eth_offload=undef,
         Optional[String[1]]             $gateway=undef,
         Optional[String[1]]             $ip_address=undef,
@@ -35,9 +37,6 @@ define network::interface (
         Optional[Network::Vlan_id]      $vlan=undef,
     ) {
 
-    # Sterilize the name.
-    $sterile_name = regsubst($name, '[^\w.]+', '_', 'G')
-
     # The template needs a particular macaddress fact, but it cannot do
     # something like "<%= @macaddress_<%= name %>%>", so this little trick is
     # used here to accomplish the variable interpolation.
@@ -47,9 +46,9 @@ define network::interface (
     $subscribers = $network::service ? {
         'legacy' => Service[$network::legacy_service],
         default  => [
-            Exec["reconnect ${sterile_name}"],
-            Exec["reload ${sterile_name}"],
-            Exec["disconnect ${sterile_name}"],
+            Exec["reconnect ${device}"],
+            Exec["reload ${device}"],
+            Exec["disconnect ${device}"],
         ]
     }
 
@@ -73,11 +72,11 @@ define network::interface (
             seltype => 'net_conf_t',
             notify  => $subscribers,
             ;
-        "/etc/sysconfig/network-scripts/ifcfg-${sterile_name}":
+        "/etc/sysconfig/network-scripts/ifcfg-${device}":
             ensure  => $ensure,
             content => template("network/ifcfg-${template}.erb"),
             ;
-        "/etc/sysconfig/network-scripts/route-${sterile_name}":
+        "/etc/sysconfig/network-scripts/route-${device}":
             ensure  => $routes_ensure,
             content => $routes_content,
             ;
@@ -86,7 +85,7 @@ define network::interface (
     if $template == 'wireless' {
         include 'network::wireless'
         if $key_mgmt == 'WPA-PSK' {
-            file { "/etc/sysconfig/network-scripts/keys-${sterile_name}":
+            file { "/etc/sysconfig/network-scripts/keys-${device}":
                 ensure    => $ensure,
                 owner     => 'root',
                 group     => 'root',
@@ -103,7 +102,7 @@ define network::interface (
     if $network::service == 'nm' {
         # Use a dispatch script that NetworkManager can call to effect any TCP
         # offload configuration.
-        $script = "/etc/NetworkManager/dispatcher.d/00-config-${sterile_name}"
+        $script = "/etc/NetworkManager/dispatcher.d/00-config-${device}"
         if $eth_offload {
             file { $script:
                 ensure  => $ensure,
@@ -126,18 +125,18 @@ define network::interface (
                 path        => '/usr/bin:/bin:/usr/sbin:/sbin',
                 refreshonly => true,
                 ;
-            "reload ${sterile_name}":
-                command => "nmcli connection reload ${sterile_name}",
-                before  => Exec["disconnect ${sterile_name}"],
+            "reload ${device}":
+                command => "nmcli connection reload ${device}",
+                before  => Exec["disconnect ${device}"],
                 ;
             # This is brutish, but the only means I could find to affect the
             # runtime state to fully match the configured state.
-            "disconnect ${sterile_name}":
-                command => "nmcli device disconnect ${sterile_name}",
-                before  => Exec["reconnect ${sterile_name}"],
+            "disconnect ${device}":
+                command => "nmcli device disconnect ${device}",
+                before  => Exec["reconnect ${device}"],
                 ;
-            "reconnect ${sterile_name}":
-                command => "nmcli device connect ${sterile_name}",
+            "reconnect ${device}":
+                command => "nmcli device connect ${device}",
                 ;
         }
     }

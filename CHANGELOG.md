@@ -1,6 +1,6 @@
 <!--
 This file is part of the doubledog-network Puppet module.
-Copyright 2018-2019 John Florian
+Copyright 2018-2020 John Florian
 SPDX-License-Identifier: GPL-3.0-or-later
 
 Template
@@ -18,6 +18,23 @@ Template
 # Change log
 
 All notable changes to this project (since v1.0.0) will be documented in this file.  The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
+
+## [3.0.0] 2020-01-08
+### Added
+- `network::interface::device` parameter
+- `network::interface::essid` parameter
+- CentOS 8 support
+- Fedora 31 support
+### Changed
+- BREAKING: wireless interfaces must now have `$namevar` set to the device name (e.g., `wlan0`) instead of the ESSID which must now instead be set via the new parameter (above)
+- `network::interface::device` parameter makes it possible for `network::interface::namevar` to be arbitrary now
+### Removed
+- Fedora 28 support
+### Fixed
+- `network::wireless` class now ensures that `wpa_supplicant` package is installed
+    - Fedora Server 31 setup failed to associate with an WAP without this because it wasn't already installed like with older Minimal images.
+- `wireless` template failed to set `MODE=` correctly (or at all)
+- disconnect/reconnect of device fails for wireless interfaces because NM wants a device name here, not a connection name or ESSID
 
 ## [2.1.0] 2019-10-15
 ### Changed

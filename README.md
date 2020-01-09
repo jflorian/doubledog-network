@@ -1,6 +1,6 @@
 <!--
 This file is part of the doubledog-network Puppet module.
-Copyright 2018-2019 John Florian <jflorian@doubledog.org>
+Copyright 2018-2020 John Florian <jflorian@doubledog.org>
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
@@ -113,7 +113,7 @@ An array of package names needed for a wireless network installation.  The defau
 This defined type manages a network interface configuration.
 
 ##### `namevar` (required)
-Name of the interface, e.g., `'eth0'`.  If *template* is `'wireless'` this must be set to the Extended Service Set Identification (ESSID) of the wireless network.
+An arbitrary identifier for the instance unless the *device* parameter is not set in which case this must provide the value normally set with the *device* parameter.
 
 ##### `template` (required)
 The particular template to be used.  Must be one of `'dhcp'`, `'dhcp-bridge'`, `'static'`, `'static-bridge'` or `'wireless'`.  The `'wireless'` template assumes a DHCP configuration and is only supported when `$network::service` is `'nm'` (NetworkManager).
@@ -126,6 +126,12 @@ Name of the associated bridge interface, if any.  Ignored when *template* is one
 
 ##### `country`
 Country code for CRDA when *template* is `'wireless'`.  Ignored for all other templates.
+
+##### `device`
+Name of the device interface, e.g., `'eth0'` or `'wlan0'`.  This may be used in place of *namevar* if it's beneficial to give *namevar* an arbitrary value.
+
+##### `essid`
+Extended Service Set Identification (ESSID) of the wireless network.  Required when *template* is `'wireless'` and ignored for all others.
 
 ##### `eth_offload`
 Any device-specific options supported by `ethtool`'s `-K` option expressed as a simple string passed along unmodified.  E.g., `'gso off'`.
