@@ -1,6 +1,6 @@
 <%#
 This file is part of the doubledog-network Puppet module.
-Copyright 2010-2020 John Florian
+Copyright 2010-2021 John Florian
 SPDX-License-Identifier: GPL-3.0-or-later
 -%>
 # Network interface configuration for <%= @name %> on <%= @fqdn %>
@@ -25,6 +25,9 @@ IPV4_FAILURE_FATAL="yes"
 IPV6INIT="no"
 <% if @mac_address -%>
 MACADDR="<%= @mac_address %>"
+<% end -%>
+<% if @metric -%>
+METRIC="<%= @metric %>"
 <% end -%>
 NAME="System <%= @name %>"
 NETMASK="<%= @netmask %>"
