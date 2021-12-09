@@ -1,6 +1,6 @@
 <!--
 This file is part of the doubledog-network Puppet module.
-Copyright 2018-2020 John Florian <jflorian@doubledog.org>
+Copyright 2018-2021 John Florian <jflorian@doubledog.org>
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
@@ -147,6 +147,9 @@ Key management method for wireless encryption.  Must be one of `'WPA-PSK'` (defa
 
 ##### `mac_address`
 The MAC address to be assigned to the interface.  This is not used for identifying/matching a physical interface but rather to override what the manufacturer assigned.
+
+##### `metric`
+Metric for the default route specified by *gateway*.  The default is whatever the iproute2 package assigns, usually (always?) `100`.
 
 ##### `mode`
 Wireless mode.  Must be one of `'Managed'` (default, also known as infrastructure mode) or ???.  Required when *template* is `'wireless'` and ignored for all others.

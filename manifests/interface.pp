@@ -10,31 +10,32 @@
 # === Copyright
 #
 # This file is part of the doubledog-network Puppet module.
-# Copyright 2010-2020 John Florian
+# Copyright 2010-2021 John Florian
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
 define network::interface (
-        Network::Template               $template,
-        Ddolib::File::Ensure::Limited   $ensure='present',
-        Optional[String[1]]             $bridge=undef,
-        String[2,2]                     $country='US',
-        Optional[String[1]]             $device=$title,
-        Optional[String[1]]             $essid=undef,
-        Optional[String[1]]             $eth_offload=undef,
-        Optional[String[1]]             $gateway=undef,
-        Optional[String[1]]             $ip_address=undef,
-        Enum['WPA-PSK']                 $key_mgmt='WPA-PSK',
-        Optional[String[1]]             $mac_address=undef,
-        Enum['Managed']                 $mode='Managed',
-        Optional[String[1]]             $netmask=undef,
-        Boolean                         $peer_dns=true,
-        Boolean                         $peer_ntp=true,
-        Boolean                         $persistent_dhcp=true,
-        Optional[String[1]]             $psk=undef,
-        Optional[Hash[String[1], Hash]] $routes=undef,
-        Boolean                         $stp=true,
-        Optional[Network::Vlan_id]      $vlan=undef,
+        Network::Template                   $template,
+        Ddolib::File::Ensure::Limited       $ensure='present',
+        Optional[String[1]]                 $bridge=undef,
+        String[2,2]                         $country='US',
+        Optional[String[1]]                 $device=$title,
+        Optional[String[1]]                 $essid=undef,
+        Optional[String[1]]                 $eth_offload=undef,
+        Optional[String[1]]                 $gateway=undef,
+        Optional[String[1]]                 $ip_address=undef,
+        Enum['WPA-PSK']                     $key_mgmt='WPA-PSK',
+        Optional[String[1]]                 $mac_address=undef,
+        Optional[Integer[0,  (1<<32)-1]]    $metric=undef,
+        Enum['Managed']                     $mode='Managed',
+        Optional[String[1]]                 $netmask=undef,
+        Boolean                             $peer_dns=true,
+        Boolean                             $peer_ntp=true,
+        Boolean                             $persistent_dhcp=true,
+        Optional[String[1]]                 $psk=undef,
+        Optional[Hash[String[1], Hash]]     $routes=undef,
+        Boolean                             $stp=true,
+        Optional[Network::Vlan_id]          $vlan=undef,
     ) {
 
     # The template needs a particular macaddress fact, but it cannot do
@@ -59,7 +60,7 @@ define network::interface (
 
     $routes_content = $routes ? {
         undef   => undef,
-        default => template("network/route.erb")
+        default => template('network/route.erb')
     }
 
     file {
