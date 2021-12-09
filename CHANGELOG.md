@@ -19,14 +19,9 @@ Template
 
 All notable changes to this project (since v1.0.0) will be documented in this file.  The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [3.1.0] WIP
+## [3.1.0] 2021-12-09
 ### Added
 - `network::interface::metric` parameter
-### Changed
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [3.0.0] 2020-01-08
 ### Added
